@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Explorer | My Itinerary Dashboard</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            background-color: #0d0d0d;
+        }
+        .dashboard-container {
+            display: flex;
+            height: calc(100vh - 80px);
+            margin-top: 80px;
+        }
+        .sidebar {
+            width: 300px;
+            background: #111;
+            border-right: 1px solid var(--glass-border);
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .main-pane {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: #0d0d0d;
+        }
+        .new-trip-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .new-trip-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,51,102,0.3);
+        }
+        .itinerary-item {
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .itinerary-item:hover, .itinerary-item.active {
+            background: #2a2a2a;
+            border-color: var(--primary-color);
+        }
+        .itinerary-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .itinerary-item p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 50px;
+        }
+        
+        .content-card {
+            background: #111;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .delete-btn {
+            background: transparent;
+            color: #ff4444;
+            border: 1px solid #ff4444;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+        .delete-btn:hover {
+            background: #ff4444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">IndiaExplorer</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#destinations">Destinations</a>
+            <a href="https://www.makemytrip.com" target="_blank">Transport</a>
+            <a href="/itinerary" style="color:var(--primary-color);">My Itinerary</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <button class="new-trip-btn" onclick="window.location.href='/'">
+                <i class="ph ph-plus-circle"></i> Create New Trip
+            </button>
+            <h3 style="margin-bottom:15px; font-size:14px; text-transform:uppercase; color:var(--text-muted);">Saved Histories</h3>
+            <div id="sidebar-list">
+                <!-- Javascript maps array here -->
+            </div>
+        </div>
+        
+        <div class="main-pane" id="main-pane">
+            <div class="empty-state" id="empty-state">
+                <i class="ph ph-map-trifold" style="font-size: 60px; margin-bottom: 20px; color: #333;"></i>
+                <h2>No Itinerary Selected</h2>
+                <p>Select a saved trip from the left or create a new one using Namaste Navigator.</p>
+            </div>
+            
+            <div class="content-card" id="content-card" style="display: none;">
+                <div class="toolbar">
+                    <h2 id="trip-header">Trip Details</h2>
+                    <button class="delete-btn" id="delete-btn"><i class="ph ph-trash"></i> Delete Trip</button>
+                </div>
+                <div id="itinerary-body">
+                    <!-- HTML dumped here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let itineraries = JSON.parse(localStorage.getItem('indiaExpItineraryList')) || [];
+            
+            // Legacy migration handler (if an old user had a string 'indiaExpItinerary')
+            let legacy = localStorage.getItem('indiaExpItinerary');
+            if(legacy) {
+                itineraries.push({
+                    id: Date.now() - 1000,
+                    destination: "Legacy Saved Trip",
+                    content: legacy,
+                    date: new Date().toLocaleDateString()
+                });
+                localStorage.removeItem('indiaExpItinerary');
+                localStorage.setItem('indiaExpItineraryList', JSON.stringify(itineraries));
+            }
+
+            const sidebarList = document.getElementById('sidebar-list');
+            const emptyState = document.getElementById('empty-state');
+            const contentCard = document.getElementById('content-card');
+            const tripHeader = document.getElementById('trip-header');
+            const itineraryBody = document.getElementById('itinerary-body');
+            const deleteBtn = document.getElementById('delete-btn');
+
+            let currentlySelectedId = null;
+
+            function renderSidebar() {
+                sidebarList.innerHTML = '';
+                if(itineraries.length === 0) {
+                    sidebarList.innerHTML = '<p style="color:#666; font-size:13px;">No trips saved yet.</p>';
+                    return;
+                }
+                
+                // Sort by ID descending (newest first)
+                itineraries.sort((a,b) => b.id - a.id).forEach(trip => {
+                    const div = document.createElement('div');
+                    div.className = `itinerary-item ${currentlySelectedId === trip.id ? 'active' : ''}`;
+                    div.innerHTML = `
+                        <h4>Trip to ${trip.destination}</h4>
+                        <p>Saved on: ${trip.date}</p>
+                    `;
+                    div.addEventListener('click', () => {
+                        currentlySelectedId = trip.id;
+                        renderSidebar(); // refresh active class
+                        renderMainPane(trip);
+                    });
+                    sidebarList.appendChild(div);
+                });
+            }
+
+            function renderMainPane(trip) {
+                emptyState.style.display = 'none';
+                contentCard.style.display = 'block';
+                
+                tripHeader.textContent = `${trip.destination} Itinerary`;
+                itineraryBody.innerHTML = trip.content;
+            }
+
+            deleteBtn.addEventListener('click', () => {
+                if(confirm("Are you sure you want to delete this trip itinerary permanently?")) {
+                    itineraries = itineraries.filter(t => t.id !== currentlySelectedId);
+                    localStorage.setItem('indiaExpItineraryList', JSON.stringify(itineraries));
+                    
+                    currentlySelectedId = null;
+                    emptyState.style.display = 'block';
+                    contentCard.style.display = 'none';
+                    renderSidebar();
+                }
+            });
+
+            // Auto-select latest trip if any exists
+            if(itineraries.length > 0) {
+                const latest = itineraries.sort((a,b) => b.id - a.id)[0];
+                currentlySelectedId = latest.id;
+                renderMainPane(latest);
+            }
+            
+            renderSidebar();
+        });
+    </script>
+</body>
+</html>

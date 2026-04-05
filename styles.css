@@ -1,0 +1,420 @@
+@import url('https://fonts.googleapis.css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg-color: #0b0b0b;
+    --text-color: #ffffff;
+    --text-muted: #aaaaaa;
+    --primary-color: #e50914; /* Netflix red inspired */
+    --hover-color: #ff1f2a;
+    --glass-bg: rgba(20, 20, 20, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: background 0.4s ease;
+}
+
+.navbar.scrolled {
+    background: var(--bg-color);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.nav-brand {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--text-muted);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-image 1s ease-in-out;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(11, 11, 11, 0.9) 10%, rgba(11, 11, 11, 0.3) 50%, rgba(11, 11, 11, 0.8) 100%),
+                linear-gradient(to bottom, transparent 70%, var(--bg-color) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.greeting-text {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.festival-text {
+    font-size: 22px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.primary-btn {
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none;
+}
+
+.primary-btn:hover {
+    background: var(--hover-color);
+    transform: scale(1.05);
+}
+
+/* Carousels */
+.section {
+    padding: 40px 50px;
+    position: relative;
+    z-index: 10;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #e5e5e5;
+}
+
+.carousel-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--glass-bg);
+}
+
+.card {
+    min-width: 300px;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    flex-shrink: 0;
+    display: block; /* anchor layout */
+}
+
+.card:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    z-index: 5;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+.card-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    font-weight: 600;
+    font-size: 18px;
+}
+.card-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    z-index: 2;
+}
+
+
+/* Photo Folder UI */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.folder-card-photo {
+    position: relative;
+    height: 200px;
+    border-radius: 8px 8px 12px 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.folder-card-photo::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 35%;
+    height: 10px;
+    background: var(--bg-color); /* fake folder cut out */
+    border-bottom: 2px solid #333;
+    z-index: 5;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+}
+
+.folder-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.folder-card-photo .folder-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.4s;
+}
+
+.folder-card-photo:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.9);
+}
+
+.folder-card-photo:hover img {
+    transform: scale(1.1);
+}
+
+.folder-card-photo:hover .folder-overlay {
+    background: rgba(0,0,0,0.2);
+}
+
+/* AI Guide Character */
+.ai-guide {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(167, 119, 227, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.3s;
+}
+
+.ai-guide:hover {
+    transform: scale(1.1);
+}
+
+.ai-guide i {
+    font-size: 34px;
+    color: white;
+}
+
+/* Chatbox */
+.chatbox-wrapper {
+    position: fixed;
+    bottom: 140px;
+    right: 40px;
+    width: 400px;
+    height: 550px;
+    background: #181818;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chatbox-wrapper.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.chat-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.chat-header h3 {
+    font-size: 18px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.msg {
+    max-width: 90%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.msg.ai {
+    background: #2a2a2a;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+
+.msg.user {
+    background: var(--primary-color);
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+.chat-input {
+    padding: 15px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    font-size: 14px;
+}
+
+.chat-input button {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@media (max-width: 768px) {
+    .greeting-text { font-size: 40px; }
+    .hero { padding: 0 20px; }
+    .section { padding: 30px 20px; }
+    .chatbox-wrapper { width: calc(100% - 40px); left: 20px; right: 20px; bottom: 120px; height: 400px; }
+}

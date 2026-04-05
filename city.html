@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Explorer | City Details</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        .city-hero {
+            position: relative;
+            height: 60vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .hero-bg.active {
+            opacity: 1;
+        }
+        .city-hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, var(--bg-color), rgba(0,0,0,0.5));
+            z-index: 1;
+        }
+        .city-title-wrapper {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        .city-title-wrapper h1 {
+            font-size: 70px;
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+        .city-content {
+            padding: 50px;
+            display: flex;
+            gap: 50px;
+        }
+        .info-panel {
+            flex: 1;
+        }
+        .map-panel {
+            flex: 1;
+            height: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid var(--glass-border);
+        }
+        #interactive-map {
+            width: 100%;
+            height: 100%;
+            background: #e5e5e5;
+        }
+        .attractions-list {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .attraction-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .attraction-card:hover {
+            transform: scale(1.02);
+            background: #2a2a2a;
+        }
+        .attraction-img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+        }
+        .attraction-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background: #111;
+            color: white;
+            border: 1px solid var(--glass-border);
+        }
+        .leaflet-popup-tip {
+            background: #111;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">IndiaExplorer</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#destinations">Destinations</a>
+            <a href="https://www.makemytrip.com" target="_blank">Transport</a>
+            <a href="/itinerary" style="color:var(--primary-color);">My Itinerary</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="city-hero" id="city-hero">
+            <div class="city-title-wrapper">
+                <h1 id="city-name">Loading...</h1>
+                <p id="city-state" style="font-size: 20px; color: var(--text-muted);"></p>
+            </div>
+        </section>
+
+        <section class="city-content">
+            <div class="info-panel">
+                <h2 style="font-size:32px; margin-bottom: 20px;">About this location</h2>
+                <p id="city-description" style="font-size: 18px; line-height: 1.6; color: #ddd;"></p>
+                
+                <h3 style="margin-top: 40px; font-size: 24px;">Top Attractions (Hover to view on map)</h3>
+                <div class="attractions-list" id="city-attractions">
+                    <!-- Injected -->
+                </div>
+                
+                <a href="https://www.makemytrip.com" target="_blank" class="primary-btn" style="display:inline-flex; margin-top:40px;">
+                    Check Transport Options <i class="ph ph-airplane-tilt"></i>
+                </a>
+            </div>
+            
+            <div class="map-panel" id="map-panel">
+                <div id="interactive-map"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const path = window.location.pathname.replace(/\/$/, "");
+            const parts = path.split('/');
+            const cityId = parts[parts.length - 1];
+
+            try {
+                const res = await fetch('/api/data');
+                const data = await res.json();
+                
+                const cityData = data.cities[cityId];
+                if(cityData) {
+                    document.getElementById('city-name').textContent = cityData.title;
+                    document.getElementById('city-state').textContent = cityData.state;
+                    document.getElementById('city-description').textContent = cityData.description;
+
+                    // Netflix style background carousel logic
+                    const heroContainer = document.getElementById('city-hero');
+                    let images = [cityData.img];
+                    cityData.attractions.forEach(attr => images.push(attr.img));
+                    
+                    let bgDivs = [];
+                    images.forEach((imgUrl, idx) => {
+                        const bg = document.createElement('div');
+                        bg.className = 'hero-bg';
+                        if(idx === 0) bg.classList.add('active'); // First image visible
+                        bg.style.backgroundImage = `url('${imgUrl}')`;
+                        heroContainer.insertBefore(bg, heroContainer.firstChild);
+                        bgDivs.push(bg);
+                    });
+                    
+                    let currentBgIdx = 0;
+                    setInterval(() => {
+                        bgDivs[currentBgIdx].classList.remove('active');
+                        currentBgIdx = (currentBgIdx + 1) % bgDivs.length;
+                        bgDivs[currentBgIdx].classList.add('active');
+                    }, 4000); // Cross-fade every 4 seconds
+
+                    // Init Leaflet Map with Standard OpenStreetMap Layer
+                    const map = L.map('interactive-map', { zoomControl: true }).setView([20.5937, 78.9629], 4); 
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    // Reusable marker
+                    let marker = L.marker([cityData.lat, cityData.lng]).addTo(map);
+                    
+                    function setMapToLocation(lat, lng, title, imgUrl, zoomLevel) {
+                        const popupContent = `
+                            <div style="text-align:center; font-family: 'Outfit', sans-serif;">
+                                <img src="${imgUrl}" style="width:140px; height:80px; object-fit:cover; border-radius:6px; margin-bottom:8px;">
+                                <br>
+                                <b style="font-size:16px;">${title}</b>
+                            </div>
+                        `;
+                        marker.setLatLng([lat, lng]);
+                        marker.setPopupContent(popupContent);
+                        
+                        if(zoomLevel) {
+                            map.flyTo([lat, lng], zoomLevel, { duration: 1.2 });
+                        }
+                    }
+
+                    // On initial load, set to city default
+                    setMapToLocation(cityData.lat, cityData.lng, cityData.title, cityData.img, 10);
+                    setTimeout(() => marker.openPopup(), 1500);
+
+                    const attrContainer = document.getElementById('city-attractions');
+                    cityData.attractions.forEach(attr => {
+                        const div = document.createElement('div');
+                        div.className = 'attraction-card';
+                        div.innerHTML = `
+                            <img src="${attr.img}" class="attraction-img" alt="${attr.name}">
+                            <div class="attraction-name">${attr.name}</div>
+                        `;
+                        
+                        // Hover Logic for specific map updating
+                        div.addEventListener('mouseenter', () => {
+                            setMapToLocation(attr.lat, attr.lng, attr.name, attr.img, 14);
+                            if(!marker.isPopupOpen()) marker.openPopup();
+                        });
+                        
+                        attrContainer.appendChild(div);
+                    });
+
+                    // When mouse leaves the attractions list entirely, reset to city view
+                    attrContainer.addEventListener('mouseleave', () => {
+                        setMapToLocation(cityData.lat, cityData.lng, cityData.title, cityData.img, 10);
+                        if(!marker.isPopupOpen()) marker.openPopup();
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>
