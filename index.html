@@ -19,13 +19,45 @@
 </head>
 <body>
 
+    <!-- Inline SVG definitions for gradients -->
+    <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#00c6ff;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#8e2de2;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+    </svg>
+
     <nav class="navbar" id="navbar">
-        <div class="nav-brand" style="font-family: 'Playfair Display', serif; text-transform: uppercase;">TRAVEZA</div>
-        <div class="nav-links">
+        <div class="nav-brand" style="display:flex; align-items:center; gap:5px;">
+            <svg width="40" height="40" viewBox="0 0 100 100">
+                <path d="M50 10 C30 10 10 30 10 50 C10 70 50 90 50 90 C50 90 90 70 90 50 C90 30 70 10 50 10 Z" fill="url(#grad1)" opacity="0.8"/>
+                <circle cx="50" cy="45" r="15" fill="#fff"/>
+            </svg>
+            <span style="font-family: 'Playfair Display', serif; text-transform: uppercase; background: -webkit-linear-gradient(#00c6ff, #8e2de2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">TRAVEZA</span>
+        </div>
+        <div class="nav-links" style="display:flex; align-items:center;">
             <a href="/#home">Home</a>
             <a href="/#destinations">Destinations</a>
             <a href="https://www.makemytrip.com/flights/" target="_blank">Transport</a>
             <a href="/itinerary" style="color:var(--primary-color);">My Itinerary</a>
+            
+            <div class="profile-menu-container" id="profile-menu-container" style="display:none; margin-left:20px;">
+                <div class="profile-btn" id="profile-toggle">
+                    <span id="profile-name-display">My Space</span> <i class="ph ph-caret-down"></i>
+                </div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="profile-header">
+                        <strong id="dropdown-username">User</strong>
+                        <span id="dropdown-email">user@gmail.com</span>
+                    </div>
+                    <a href="#" class="profile-item" id="edit-profile-btn"><i class="ph ph-pencil-simple"></i> Edit Profile</a>
+                    <a href="#" class="profile-item" id="switch-account-btn"><i class="ph ph-users"></i> Switch Account</a>
+                    <a href="#" class="profile-item profile-logout" id="logout-btn"><i class="ph ph-sign-out"></i> Logout</a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -120,13 +152,113 @@
         </div>
     </div>
 
-    <!-- Personalization Modal Container -->
-    <div id="onboarding" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;transition: opacity 0.5s;">
-        <div style="background:rgba(10, 15, 10, 0.95);padding:40px;border-radius:15px;text-align:center;max-width:400px;border: 1px solid rgba(245, 215, 110, 0.3);">
-            <h2 style="margin-bottom:20px;font-size:28px;font-family:'Playfair Display',serif;color:#f5d76e;">Welcome to TRAVEZA</h2>
-            <p style="color:var(--text-muted);margin-bottom:20px;">What should I call you?</p>
-            <input type="text" id="username-input" style="width:100%;padding:12px;margin-bottom:20px;border-radius:8px;border:none;outline:none;font-size:16px;background:#2a2a2a;color:white;" placeholder="Your Name">
-            <button class="primary-btn" id="start-btn" style="width:100%;justify-content:center;">Let's Go</button>
+    <!-- Intro Splash Screen -->
+    <div id="splash-screen" class="auth-overlay" style="display:flex;">
+        <div class="splash-svg-container">
+            <svg width="300" height="100" viewBox="0 0 300 100">
+                <path class="path-trace" d="M 10 50 Q 80 10 150 50 T 260 50" />
+                <circle class="dot-trace" cx="260" cy="50" r="8" />
+                <text x="150" y="65" text-anchor="middle" font-family="'Playfair Display', serif" font-size="45" font-weight="800" fill="url(#grad1)" letter-spacing="5">TRAVEZA</text>
+            </svg>
+        </div>
+        <audio id="splash-audio" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_a1a0f9b657.mp3?filename=whoosh-6301.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- Main Auth Layer Container -->
+    <div id="auth-layer" class="auth-overlay" style="display:none;">
+        
+        <!-- Login Form -->
+        <div id="auth-login" class="auth-box">
+            <h2 class="auth-title">Welcome Back</h2>
+            <p class="auth-subtitle">Sign in to continue planning your trips.</p>
+            
+            <div class="input-group">
+                <input type="text" id="login-identifier" placeholder="Username or Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="login-password" placeholder="Password" required>
+            </div>
+            
+            <button class="primary-btn w-100" id="login-btn" style="justify-content:center; margin-bottom:15px;">Sign In</button>
+            <button class="google-btn w-100" id="google-login-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                Login with Google
+            </button>
+            
+            <div class="auth-links">
+                <span id="show-forgot-btn">Forgot Password?</span>
+                <span id="show-signup-btn">New user? Sign Up</span>
+            </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="auth-signup" class="auth-box" style="display:none;">
+            <h2 class="auth-title">Create Account</h2>
+            <p class="auth-subtitle">Join Traveza today.</p>
+            
+            <div class="input-group">
+                <input type="text" id="signup-username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="signup-email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="signup-password" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <input type="number" id="signup-age" placeholder="Age" required>
+            </div>
+            <div class="input-group">
+                <input type="tel" id="signup-mobile" placeholder="Mobile Number" required>
+            </div>
+            
+            <button class="primary-btn w-100" id="signup-btn" style="justify-content:center;">Create Account</button>
+            
+            <div class="auth-links center-link">
+                <span id="back-to-login-btn">Already have an account? Sign In</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Google Mock Modal -->
+    <div id="google-mock-modal" class="auth-overlay" style="display:none; z-index: 10001; background: rgba(0,0,0,0.8);">
+        <div class="google-dialog">
+            <h3>Sign in with Google</h3>
+            <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">Choose an account to continue to Traveza</p>
+            <div class="google-account" id="mock-account-1">
+                <div class="google-avatar" style="background:#4285f4;">A</div>
+                <div class="google-info">
+                    <strong>Alex Explorer</strong>
+                    <span>alex@gmail.com</span>
+                </div>
+            </div>
+            <div class="google-account" id="mock-account-2">
+                <div class="google-avatar" style="background:#0f9d58;">T</div>
+                <div class="google-info">
+                    <strong>Traveler</strong>
+                    <span>traveler@gmail.com</span>
+                </div>
+            </div>
+            <button class="elegant-btn" id="close-google-mock" style="width:100%; justify-content:center; margin-top:15px; padding:8px;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="auth-overlay" style="display:none; z-index: 10002;">
+        <div class="edit-modal-content">
+            <span class="close-btn" id="close-edit-profile">&times;</span>
+            <h2 class="auth-title" style="margin-bottom:20px; font-size:26px;">Edit Profile</h2>
+            <div class="input-group">
+                <input type="text" id="edit-username" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <input type="email" id="edit-email" placeholder="Email Address">
+            </div>
+            <div class="input-group">
+                <input type="password" id="edit-password" placeholder="New Password (optional)">
+            </div>
+            <button class="primary-btn w-100" id="save-profile-btn" style="justify-content:center; margin-top:10px;">Save Changes</button>
         </div>
     </div>
 
