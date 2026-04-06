@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(monthTitle) monthTitle.textContent = `Special in ${festivalInfo.month}`;
         festivalInfoText.textContent = `Discover incredible places hosting ${festivalInfo.event}`;
-        heroSection.style.backgroundImage = `url('${festivalInfo.bg}')`;
+        // heroSection.style.backgroundImage = `url('${festivalInfo.bg}')`; // PRESERVE ELEGANT BACKGROUND
 
         // Render Carousels using the mapping to cities database
         renderCarousel('special-carousel', appData.topDestinationsThisMonth);
@@ -282,4 +282,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if(e.key === 'Enter') handleUserInput();
         });
     }
+
+    // ==========================================
+    // PARALLAX EFFECT FOR HERO
+    // ==========================================
+    const heroSliderContainer = document.getElementById('hero-slider-container');
+    window.addEventListener('scroll', () => {
+        if(heroSliderContainer && window.scrollY < window.innerHeight) {
+            heroSliderContainer.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+        }
+    });
+
 });

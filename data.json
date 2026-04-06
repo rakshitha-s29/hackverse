@@ -1,149 +1,494 @@
 {
   "festivalsData": {
-    "0": { "month": "January", "event": "Republic Day & Pongal", "bg": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=2000" },
-    "1": { "month": "February", "event": "Goa Carnival & Taj Mahotsav", "bg": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=2000" },
-    "2": { "month": "March", "event": "Holi in Vrindavan", "bg": "https://images.unsplash.com/photo-1553342385-111af3b02447?auto=format&fit=crop&q=80&w=2000" },
-    "3": { "month": "April", "event": "Baisakhi & Thrissur Pooram", "bg": "https://images.unsplash.com/photo-1582510003544-4d00b7f7415e?auto=format&fit=crop&q=80&w=2000" },
-    "4": { "month": "May", "event": "Moatsu Mong & Summer Festival", "bg": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=2000" },
-    "5": { "month": "June", "event": "Hemis Festival & Sindhu Darshan", "bg": "https://images.unsplash.com/photo-1626014903706-e7d6270fc6da?auto=format&fit=crop&q=80&w=2000" },
-    "6": { "month": "July", "event": "Rath Yatra, Puri", "bg": "https://images.unsplash.com/photo-1601058269785-5b4d7c58d047?auto=format&fit=crop&q=80&w=2000" },
-    "7": { "month": "August", "event": "Independence Day & Onam", "bg": "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&q=80&w=2000" },
-    "8": { "month": "September", "event": "Ganesh Chaturthi", "bg": "https://images.unsplash.com/photo-1563820228392-f04bf4958197?auto=format&fit=crop&q=80&w=2000" },
-    "9": { "month": "October", "event": "Durga Puja & Dussehra", "bg": "https://cdn.pixabay.com/photo/2020/09/16/09/52/durga-puja-5575883_1280.jpg" },
-    "10": { "month": "November", "event": "Diwali Festival of Lights", "bg": "https://images.unsplash.com/photo-1540914124281-342587941389?auto=format&fit=crop&q=80&w=2000" },
-    "11": { "month": "December", "event": "Hornbill Festival & Rann Utsav", "bg": "https://images.unsplash.com/photo-1596791850117-cdb7eaf7fc72?auto=format&fit=crop&q=80&w=2000" }
+    "0": {
+      "month": "January",
+      "event": "Republic Day & Pongal",
+      "bg": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800"
+    },
+    "1": {
+      "month": "February",
+      "event": "Goa Carnival & Taj Mahotsav",
+      "bg": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=800"
+    },
+    "2": {
+      "month": "March",
+      "event": "Holi in Vrindavan",
+      "bg": "https://images.unsplash.com/photo-1553342385-111af3b02447?auto=format&fit=crop&q=80&w=800"
+    },
+    "3": {
+      "month": "April",
+      "event": "Baisakhi & Thrissur Pooram",
+      "bg": "https://images.unsplash.com/photo-1582510003544-4d00b7f7415e?auto=format&fit=crop&q=80&w=800"
+    },
+    "4": {
+      "month": "May",
+      "event": "Moatsu Mong & Summer Festival",
+      "bg": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800"
+    },
+    "5": {
+      "month": "June",
+      "event": "Hemis Festival & Sindhu Darshan",
+      "bg": "https://images.unsplash.com/photo-1626014903706-e7d6270fc6da?auto=format&fit=crop&q=80&w=800"
+    },
+    "6": {
+      "month": "July",
+      "event": "Rath Yatra, Puri",
+      "bg": "https://images.unsplash.com/photo-1601058269785-5b4d7c58d047?auto=format&fit=crop&q=80&w=800"
+    },
+    "7": {
+      "month": "August",
+      "event": "Independence Day & Onam",
+      "bg": "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&q=80&w=800"
+    },
+    "8": {
+      "month": "September",
+      "event": "Ganesh Chaturthi",
+      "bg": "https://images.unsplash.com/photo-1563820228392-f04bf4958197?auto=format&fit=crop&q=80&w=800"
+    },
+    "9": {
+      "month": "October",
+      "event": "Durga Puja & Dussehra",
+      "bg": "https://cdn.pixabay.com/photo/2020/09/16/09/52/durga-puja-5575883_1280.jpg"
+    },
+    "10": {
+      "month": "November",
+      "event": "Diwali Festival of Lights",
+      "bg": "https://images.unsplash.com/photo-1540914124281-342587941389?auto=format&fit=crop&q=80&w=800"
+    },
+    "11": {
+      "month": "December",
+      "event": "Hornbill Festival & Rann Utsav",
+      "bg": "https://images.unsplash.com/photo-1596791850117-cdb7eaf7fc72?auto=format&fit=crop&q=80&w=800"
+    }
   },
   "moodImages": {
-      "happy": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800",
-      "romantic": "https://images.unsplash.com/photo-1518104593124-ac2e82a5eb9d?auto=format&fit=crop&q=80&w=800",
-      "stressed": "https://images.unsplash.com/photo-1522845015757-50bce044e5da?auto=format&fit=crop&q=80&w=800",
-      "peace": "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&q=80&w=800",
-      "nature": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=800",
-      "city": "https://images.unsplash.com/photo-1515544464164-325bdf2559fd?auto=format&fit=crop&q=80&w=800",
-      "beach": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800",
-      "mountains": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
-      "countryside": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800"
+    "happy": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800",
+    "romantic": "https://images.unsplash.com/photo-1518104593124-ac2e82a5eb9d?auto=format&fit=crop&q=80&w=800",
+    "stressed": "https://images.unsplash.com/photo-1522845015757-50bce044e5da?auto=format&fit=crop&q=80&w=800",
+    "peace": "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&q=80&w=800",
+    "nature": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=800",
+    "city": "https://images.unsplash.com/photo-1515544464164-325bdf2559fd?auto=format&fit=crop&q=80&w=800",
+    "beach": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800",
+    "mountains": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
+    "countryside": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800"
   },
   "cities": {
     "jaipur": {
-        "title": "Jaipur", "state": "Rajasthan", "lat": 26.9124, "lng": 75.7873, "description": "The Pink City famous for its massive forts and vibrant royal heritage.", "img": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Amer Fort", "lat": 26.9855, "lng": 75.8513, "img": "https://images.unsplash.com/photo-1599661559892-db5ad6c2e395?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Hawa Mahal", "lat": 26.9239, "lng": 75.8267, "img": "https://images.unsplash.com/photo-1582236113110-333e85741639?auto=format&fit=crop&q=80&w=800"},
-          {"name": "City Palace", "lat": 26.9258, "lng": 75.8237, "img": "https://images.unsplash.com/photo-1629807490059-43c39d9a0d85?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Jaipur",
+      "state": "Rajasthan",
+      "lat": 26.9124,
+      "lng": 75.7873,
+      "description": "The Pink City famous for its massive forts and vibrant royal heritage.",
+      "img": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Amer Fort",
+          "lat": 26.9855,
+          "lng": 75.8513,
+          "img": "https://images.unsplash.com/photo-1599661559892-db5ad6c2e395?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Hawa Mahal",
+          "lat": 26.9239,
+          "lng": 75.8267,
+          "img": "https://images.unsplash.com/photo-1582236113110-333e85741639?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "City Palace",
+          "lat": 26.9258,
+          "lng": 75.8237,
+          "img": "https://images.unsplash.com/photo-1629807490059-43c39d9a0d85?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "varanasi": {
-        "title": "Varanasi", "state": "Uttar Pradesh", "lat": 25.3176, "lng": 82.9739, "description": "The spiritual capital of India set alongside the holy river Ganges.", "img": "https://images.unsplash.com/photo-1561359313-0639aad49ca6?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Dashashwamedh Ghat", "lat": 25.3060, "lng": 83.0097, "img": "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Kashi Vishwanath Temple", "lat": 25.3109, "lng": 83.0107, "img": "https://images.unsplash.com/photo-1622306782245-c42a2202611a?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Ganga Aarti", "lat": 25.3061, "lng": 83.0098, "img": "https://images.unsplash.com/photo-1549487565-d01f2fdeacac?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Varanasi",
+      "state": "Uttar Pradesh",
+      "lat": 25.3176,
+      "lng": 82.9739,
+      "description": "The spiritual capital of India set alongside the holy river Ganges.",
+      "img": "https://images.unsplash.com/photo-1561359313-0639aad49ca6?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Dashashwamedh Ghat",
+          "lat": 25.306,
+          "lng": 83.0097,
+          "img": "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Kashi Vishwanath Temple",
+          "lat": 25.3109,
+          "lng": 83.0107,
+          "img": "https://images.unsplash.com/photo-1622306782245-c42a2202611a?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Ganga Aarti",
+          "lat": 25.3061,
+          "lng": 83.0098,
+          "img": "https://images.unsplash.com/photo-1549487565-d01f2fdeacac?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "udaipur": {
-        "title": "Udaipur", "state": "Rajasthan", "lat": 24.5854, "lng": 73.7125, "description": "A highly romantic setting known as the City of Lakes.", "img": "https://images.unsplash.com/photo-1615836245337-f839dff8a631?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Lake Pichola", "lat": 24.5721, "lng": 73.6789, "img": "https://images.unsplash.com/photo-1588629080614-36a6cfbeaaba?auto=format&fit=crop&q=80&w=800"},
-          {"name": "City Palace", "lat": 24.5764, "lng": 73.6835, "img": "https://images.unsplash.com/photo-1611029853922-8698bf4f4886?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Jag Mandir", "lat": 24.5673, "lng": 73.6773, "img": "https://images.unsplash.com/photo-1569992383856-787c88b0a9cd?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Udaipur",
+      "state": "Rajasthan",
+      "lat": 24.5854,
+      "lng": 73.7125,
+      "description": "A highly romantic setting known as the City of Lakes.",
+      "img": "https://images.unsplash.com/photo-1561359313-0639aad49ca6?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Lake Pichola",
+          "lat": 24.5721,
+          "lng": 73.6789,
+          "img": "https://images.unsplash.com/photo-1588629080614-36a6cfbeaaba?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "City Palace",
+          "lat": 24.5764,
+          "lng": 73.6835,
+          "img": "https://images.unsplash.com/photo-1611029853922-8698bf4f4886?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Jag Mandir",
+          "lat": 24.5673,
+          "lng": 73.6773,
+          "img": "https://images.unsplash.com/photo-1569992383856-787c88b0a9cd?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "ladakh": {
-        "title": "Leh Ladakh", "state": "Jammu & Kashmir", "lat": 34.1526, "lng": 77.5771, "description": "Breathtaking snowy peaks and immense Buddhist mountain culture.", "img": "https://images.unsplash.com/photo-1558231263-2283a0429f9f?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Pangong Tso", "lat": 33.7297, "lng": 78.8983, "img": "https://images.unsplash.com/photo-1610419353909-02660142e8cc?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Nubra Valley", "lat": 34.6863, "lng": 77.5673, "img": "https://images.unsplash.com/photo-1618034509652-3ca791ef64ff?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Thiksey Monastery", "lat": 34.0560, "lng": 77.6675, "img": "https://images.unsplash.com/photo-1589140417936-e82df4bdfc5d?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Leh Ladakh",
+      "state": "Jammu & Kashmir",
+      "lat": 34.1526,
+      "lng": 77.5771,
+      "description": "Breathtaking snowy peaks and immense Buddhist mountain culture.",
+      "img": "https://images.unsplash.com/photo-1570535312015-81232d34a413?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Pangong Tso",
+          "lat": 33.7297,
+          "lng": 78.8983,
+          "img": "https://images.unsplash.com/photo-1610419353909-02660142e8cc?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Nubra Valley",
+          "lat": 34.6863,
+          "lng": 77.5673,
+          "img": "https://images.unsplash.com/photo-1618034509652-3ca791ef64ff?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Thiksey Monastery",
+          "lat": 34.056,
+          "lng": 77.6675,
+          "img": "https://images.unsplash.com/photo-1589140417936-e82df4bdfc5d?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "goa": {
-        "title": "Goa", "state": "Goa", "lat": 15.2993, "lng": 74.1240, "description": "Sun, sand, and an unbeatable laid-back beach vacation atmosphere.", "img": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Baga Beach", "lat": 15.5553, "lng": 73.7517, "img": "https://images.unsplash.com/photo-1548663806-121659929841?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Dudhsagar Falls", "lat": 15.3144, "lng": 74.3143, "img": "https://images.unsplash.com/photo-1644400713506-64bc14bafea6?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Basilica of Bom Jesus", "lat": 15.5009, "lng": 73.9116, "img": "https://images.unsplash.com/photo-1557004652-32a2468d6f1a?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Goa",
+      "state": "Goa",
+      "lat": 15.2993,
+      "lng": 74.124,
+      "description": "Sun, sand, and an unbeatable laid-back beach vacation atmosphere.",
+      "img": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Baga Beach",
+          "lat": 15.5553,
+          "lng": 73.7517,
+          "img": "https://images.unsplash.com/photo-1548663806-121659929841?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Dudhsagar Falls",
+          "lat": 15.3144,
+          "lng": 74.3143,
+          "img": "https://images.unsplash.com/photo-1644400713506-64bc14bafea6?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Basilica of Bom Jesus",
+          "lat": 15.5009,
+          "lng": 73.9116,
+          "img": "https://images.unsplash.com/photo-1557004652-32a2468d6f1a?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "manali": {
-        "title": "Manali", "state": "Himachal Pradesh", "lat": 32.2396, "lng": 77.1887, "description": "A high-altitude Himalayan resort town perfect for trekking and snow.", "img": "https://images.unsplash.com/photo-1605640840469-60d00f772ba6?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Rohtang Pass", "lat": 32.3716, "lng": 77.2466, "img": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Solang Valley", "lat": 32.3167, "lng": 77.1500, "img": "https://images.unsplash.com/photo-1554522723-bca323d9255a?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Hadimba Temple", "lat": 32.2468, "lng": 77.1806, "img": "https://images.unsplash.com/photo-1593693397690-28a2a89c93a0?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Manali",
+      "state": "Himachal Pradesh",
+      "lat": 32.2396,
+      "lng": 77.1887,
+      "description": "A high-altitude Himalayan resort town perfect for trekking and snow.",
+      "img": "https://images.unsplash.com/photo-1626714485864-793540c9535c?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Rohtang Pass",
+          "lat": 32.3716,
+          "lng": 77.2466,
+          "img": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Solang Valley",
+          "lat": 32.3167,
+          "lng": 77.15,
+          "img": "https://images.unsplash.com/photo-1554522723-bca323d9255a?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Hadimba Temple",
+          "lat": 32.2468,
+          "lng": 77.1806,
+          "img": "https://images.unsplash.com/photo-1593693397690-28a2a89c93a0?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "munnar": {
-        "title": "Munnar", "state": "Kerala", "lat": 10.0889, "lng": 77.0595, "description": "Endless rolling tea gardens covered dynamically in lush green.", "img": "https://images.unsplash.com/photo-1593693397690-28a2a89c93a0?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Eravikulam National Park", "lat": 10.2185, "lng": 77.0500, "img": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Mattupetty Dam", "lat": 10.1031, "lng": 77.1243, "img": "https://images.unsplash.com/photo-1569931727931-1559196b27d4?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Tea Museum", "lat": 10.0931, "lng": 77.0494, "img": "https://images.unsplash.com/photo-1605540436563-5bca919ae766?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Munnar",
+      "state": "Kerala",
+      "lat": 10.0889,
+      "lng": 77.0595,
+      "description": "Endless rolling tea gardens covered dynamically in lush green.",
+      "img": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Eravikulam National Park",
+          "lat": 10.2185,
+          "lng": 77.05,
+          "img": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Mattupetty Dam",
+          "lat": 10.1031,
+          "lng": 77.1243,
+          "img": "https://images.unsplash.com/photo-1569931727931-1559196b27d4?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Tea Museum",
+          "lat": 10.0931,
+          "lng": 77.0494,
+          "img": "https://images.unsplash.com/photo-1605540436563-5bca919ae766?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "delhi": {
-        "title": "New Delhi", "state": "Delhi", "lat": 28.6139, "lng": 77.2090, "description": "The capital region blending deep historic monuments with modern bustle.", "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Red Fort", "lat": 28.6562, "lng": 77.2410, "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Qutub Minar", "lat": 28.5245, "lng": 77.1855, "img": "https://images.unsplash.com/photo-1590408544465-98511ce5172c?auto=format&fit=crop&q=80&w=800"},
-          {"name": "India Gate", "lat": 28.6129, "lng": 77.2295, "img": "https://images.unsplash.com/photo-1585017260586-b4ad7ebd0294?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "New Delhi",
+      "state": "Delhi",
+      "lat": 28.6139,
+      "lng": 77.209,
+      "description": "The capital region blending deep historic monuments with modern bustle.",
+      "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Red Fort",
+          "lat": 28.6562,
+          "lng": 77.241,
+          "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Qutub Minar",
+          "lat": 28.5245,
+          "lng": 77.1855,
+          "img": "https://images.unsplash.com/photo-1590408544465-98511ce5172c?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "India Gate",
+          "lat": 28.6129,
+          "lng": 77.2295,
+          "img": "https://images.unsplash.com/photo-1585017260586-b4ad7ebd0294?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "mumbai": {
-        "title": "Mumbai", "state": "Maharashtra", "lat": 19.0760, "lng": 72.8777, "description": "The rapid and glamorous city that never sleeps.", "img": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Gateway of India", "lat": 18.9220, "lng": 72.8347, "img": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Marine Drive", "lat": 18.9440, "lng": 72.8226, "img": "https://images.unsplash.com/photo-1563123896-bc16eacfc2ec?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Elephanta Caves", "lat": 18.9633, "lng": 72.9315, "img": "https://images.unsplash.com/photo-1623916298586-8a71221191ec?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Mumbai",
+      "state": "Maharashtra",
+      "lat": 19.076,
+      "lng": 72.8777,
+      "description": "The rapid and glamorous city that never sleeps.",
+      "img": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Gateway of India",
+          "lat": 18.922,
+          "lng": 72.8347,
+          "img": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Marine Drive",
+          "lat": 18.944,
+          "lng": 72.8226,
+          "img": "https://images.unsplash.com/photo-1563123896-bc16eacfc2ec?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Elephanta Caves",
+          "lat": 18.9633,
+          "lng": 72.9315,
+          "img": "https://images.unsplash.com/photo-1623916298586-8a71221191ec?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "andaman": {
-        "title": "Andaman Islands", "state": "Andaman", "lat": 11.7401, "lng": 92.6586, "description": "Exclusive isolated white sand beaches and incredible reefs.", "img": "https://images.unsplash.com/photo-1588698188174-82559ccb4408?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Radhanagar Beach", "lat": 11.9839, "lng": 92.9505, "img": "https://images.unsplash.com/photo-1588698188174-82559ccb4408?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Cellular Jail", "lat": 11.6738, "lng": 92.7475, "img": "https://images.unsplash.com/photo-1627956041077-bd7ef32c49b0?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Havelock Island", "lat": 11.9761, "lng": 92.9876, "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Andaman Islands",
+      "state": "Andaman",
+      "lat": 11.7401,
+      "lng": 92.6586,
+      "description": "Exclusive isolated white sand beaches and incredible reefs.",
+      "img": "https://images.unsplash.com/photo-1588698188174-82559ccb4408?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Radhanagar Beach",
+          "lat": 11.9839,
+          "lng": 92.9505,
+          "img": "https://images.unsplash.com/photo-1588698188174-82559ccb4408?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Cellular Jail",
+          "lat": 11.6738,
+          "lng": 92.7475,
+          "img": "https://images.unsplash.com/photo-1627956041077-bd7ef32c49b0?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Havelock Island",
+          "lat": 11.9761,
+          "lng": 92.9876,
+          "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "dharamshala": {
-        "title": "Dharamshala", "state": "Himachal Pradesh", "lat": 32.2190, "lng": 76.3234, "description": "A peaceful sanctuary of Tibetan culture nested in cedar forests.", "img": "https://images.unsplash.com/photo-1605640840469-60d00f772ba6?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Tsuglagkhang Complex", "lat": 32.2323, "lng": 76.3243, "img": "https://images.unsplash.com/photo-1558231263-2283a0429f9f?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Bhagsu Waterfall", "lat": 32.2475, "lng": 76.3359, "img": "https://images.unsplash.com/photo-1605540436563-5bca919ae766?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Triund Trek", "lat": 32.2616, "lng": 76.3534, "img": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Dharamshala",
+      "state": "Himachal Pradesh",
+      "lat": 32.219,
+      "lng": 76.3234,
+      "description": "A peaceful sanctuary of Tibetan culture nested in cedar forests.",
+      "img": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Tsuglagkhang Complex",
+          "lat": 32.2323,
+          "lng": 76.3243,
+          "img": "https://images.unsplash.com/photo-1558231263-2283a0429f9f?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Bhagsu Waterfall",
+          "lat": 32.2475,
+          "lng": 76.3359,
+          "img": "https://images.unsplash.com/photo-1605540436563-5bca919ae766?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Triund Trek",
+          "lat": 32.2616,
+          "lng": 76.3534,
+          "img": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     },
     "amritsar": {
-        "title": "Amritsar", "state": "Punjab", "lat": 31.6340, "lng": 74.8723, "description": "The golden spiritual and cultural center of the Sikh religion.", "img": "https://images.unsplash.com/photo-1514222026365-5c1cfad8cba4?auto=format&fit=crop&q=80&w=800", 
-        "attractions": [
-          {"name": "Golden Temple", "lat": 31.6200, "lng": 74.8765, "img": "https://images.unsplash.com/photo-1514222026365-5c1cfad8cba4?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Jallianwala Bagh", "lat": 31.6206, "lng": 74.8799, "img": "https://images.unsplash.com/photo-1563211516-43b95a864d4b?auto=format&fit=crop&q=80&w=800"},
-          {"name": "Wagah Border", "lat": 31.6049, "lng": 74.5739, "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"}
-        ]
+      "title": "Amritsar",
+      "state": "Punjab",
+      "lat": 31.634,
+      "lng": 74.8723,
+      "description": "The golden spiritual and cultural center of the Sikh religion.",
+      "img": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Golden Temple",
+          "lat": 31.62,
+          "lng": 74.8765,
+          "img": "https://images.unsplash.com/photo-1514222026365-5c1cfad8cba4?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Jallianwala Bagh",
+          "lat": 31.6206,
+          "lng": 74.8799,
+          "img": "https://images.unsplash.com/photo-1563211516-43b95a864d4b?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Wagah Border",
+          "lat": 31.6049,
+          "lng": 74.5739,
+          "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
     }
   },
   "topDestinationsThisMonth": [
-    { "id": "jaipur", "tag": "Jaipur Literature Fest" },
-    { "id": "varanasi", "tag": "Ganga Mahotsav" },
-    { "id": "udaipur", "tag": "Mewar Festival" },
-    { "id": "amritsar", "tag": "Baisakhi Grand Vibes" },
-    { "id": "ladakh", "tag": "Hemis Celebration" }
+    {
+      "id": "jaipur",
+      "tag": "Jaipur Literature Fest"
+    },
+    {
+      "id": "varanasi",
+      "tag": "Ganga Mahotsav"
+    },
+    {
+      "id": "udaipur",
+      "tag": "Mewar Festival"
+    },
+    {
+      "id": "amritsar",
+      "tag": "Baisakhi Grand Vibes"
+    },
+    {
+      "id": "ladakh",
+      "tag": "Hemis Celebration"
+    }
   ],
   "trendingDestinations": [
-    { "id": "goa", "tag": "Beach Season" },
-    { "id": "manali", "tag": "Snow Adventure" },
-    { "id": "munnar", "tag": "Lush Greens" },
-    { "id": "delhi", "tag": "Heritage Walks" }
+    {
+      "id": "goa",
+      "tag": "Beach Season"
+    },
+    {
+      "id": "manali",
+      "tag": "Snow Adventure"
+    },
+    {
+      "id": "munnar",
+      "tag": "Lush Greens"
+    },
+    {
+      "id": "delhi",
+      "tag": "Heritage Walks"
+    }
   ],
   "moodDestinations": {
-    "happy": ["goa", "mumbai"],
-    "romantic": ["munnar", "andaman", "udaipur"],
-    "stressed": ["dharamshala", "munnar"],
-    "peace": ["ladakh", "varanasi"],
-    "nature": ["munnar", "ladakh"],
-    "city": ["delhi", "mumbai", "jaipur"],
-    "beach": ["goa", "andaman"],
-    "mountains": ["manali", "dharamshala", "ladakh"],
-    "countryside": ["jaipur", "udaipur"]
+    "happy": [
+      "goa",
+      "mumbai"
+    ],
+    "romantic": [
+      "munnar",
+      "andaman",
+      "udaipur"
+    ],
+    "stressed": [
+      "dharamshala",
+      "munnar"
+    ],
+    "peace": [
+      "ladakh",
+      "varanasi"
+    ],
+    "nature": [
+      "munnar",
+      "ladakh"
+    ],
+    "city": [
+      "delhi",
+      "mumbai",
+      "jaipur"
+    ],
+    "beach": [
+      "goa",
+      "andaman"
+    ],
+    "mountains": [
+      "manali",
+      "dharamshala",
+      "ladakh"
+    ],
+    "countryside": [
+      "jaipur",
+      "udaipur"
+    ]
   }
 }

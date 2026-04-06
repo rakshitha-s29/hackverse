@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>India Explorer | AI Powered Travel</title>
+    <title>Traveza | Plan Easy, Travel Happy</title>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=2000">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=2000">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1626714485864-793540c9535c?auto=format&fit=crop&q=80&w=2000">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=2000">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1570535312015-81232d34a413?auto=format&fit=crop&q=80&w=2000">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1561359313-0639aad49ca6?auto=format&fit=crop&q=80&w=2000">
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
     <nav class="navbar" id="navbar">
-        <div class="nav-brand">IndiaExplorer</div>
+        <div class="nav-brand" style="font-family: 'Playfair Display', serif; text-transform: uppercase;">TRAVEZA</div>
         <div class="nav-links">
             <a href="/#home">Home</a>
             <a href="/#destinations">Destinations</a>
@@ -23,25 +32,39 @@
     <main id="home">
         <!-- Hero -->
         <section class="hero" id="hero">
+            <div id="hero-slider-container" style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden;">
+                <ul class="cb-slideshow" id="hero-slider">
+                    <li><span></span></li>
+                    <li><span></span></li>
+                    <li><span></span></li>
+                    <li><span></span></li>
+                    <li><span></span></li>
+                    <li><span></span></li>
+                </ul>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="light-leak"></div>
             <div class="hero-content">
-                <h1 class="greeting-text" id="greeting">Welcome, Traveler</h1>
-                <p class="festival-text" id="festival-info">Discover the vibrant festivals of India happening this month.</p>
+                <p class="greeting-sub" id="greeting">Welcome, Traveler</p>
+                <h1 class="elegant-title">TRAVEZA</h1>
+                <p class="tagline-text">plan easy, travel happy companion</p>
+                <p class="festival-text" id="festival-info" style="display: none;">Discover the vibrant festivals of India happening this month.</p>
                 
-                <!-- Number of Travelers Section Outside Chat -->
-                <div style="background: var(--glass-bg); padding: 15px 25px; border-radius: 12px; display:inline-flex; align-items:center; gap: 15px; margin-bottom: 30px; border: 1px solid var(--glass-border);">
-                    <i class="ph-fill ph-users" style="font-size:24px;"></i>
-                    <span style="font-size: 16px;">Number of Travelers:</span>
-                    <select id="global-traveler-select" style="background:#222; color:white; border:none; padding:8px; border-radius:6px; outline:none; font-size: 16px;">
-                        <option value="1">1 (Solo)</option>
-                        <option value="2" selected>2 (Couple)</option>
-                        <option value="3">3-4 (Small Group)</option>
-                        <option value="5">5+ (Family)</option>
-                    </select>
+                <div class="hero-controls">
+                    <!-- Number of Travelers Section -->
+                    <div class="control-box">
+                        <i class="ph ph-users"></i>
+                        <select id="global-traveler-select">
+                            <option value="1">1 (Solo)</option>
+                            <option value="2" selected>2 (Couple)</option>
+                            <option value="3">3-4 (Group)</option>
+                            <option value="5">5+ (Family)</option>
+                        </select>
+                    </div>
+                    <a href="#destinations" class="elegant-btn" id="explore-btn">
+                        Explore <i class="ph ph-arrow-down"></i>
+                    </a>
                 </div>
-                <br>
-                <a href="#destinations" class="primary-btn" id="explore-btn" style="display:inline-flex;">
-                    Explore <i class="ph ph-arrow-down"></i>
-                </a>
             </div>
         </section>
 
@@ -71,8 +94,12 @@
     </main>
 
     <!-- AI Guide Character -->
-    <div class="ai-guide" id="ai-guide" title="Plan with Namaste Navigator!">
-        <i class="ph ph-robot"></i>
+    <div class="ai-guide-container">
+        <div class="chat-instruction">Hi! Plan your perfect trip with me ✈️</div>
+        <div class="ai-guide" id="ai-guide" title="Plan with Namaste Navigator!">
+            <!-- Cute Cartoon Avatar -->
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Nala&backgroundColor=f5d76e" alt="Cute Bot" style="width:100%; height:100%; border-radius:50%;">
+        </div>
     </div>
 
     <!-- Agentic Chatbox -->
@@ -95,8 +122,8 @@
 
     <!-- Personalization Modal Container -->
     <div id="onboarding" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;transition: opacity 0.5s;">
-        <div style="background:#181818;padding:40px;border-radius:15px;text-align:center;max-width:400px;border: 1px solid var(--glass-border);">
-            <h2 style="margin-bottom:20px;font-size:28px;">Welcome to IndiaExplorer</h2>
+        <div style="background:rgba(10, 15, 10, 0.95);padding:40px;border-radius:15px;text-align:center;max-width:400px;border: 1px solid rgba(245, 215, 110, 0.3);">
+            <h2 style="margin-bottom:20px;font-size:28px;font-family:'Playfair Display',serif;color:#f5d76e;">Welcome to TRAVEZA</h2>
             <p style="color:var(--text-muted);margin-bottom:20px;">What should I call you?</p>
             <input type="text" id="username-input" style="width:100%;padding:12px;margin-bottom:20px;border-radius:8px;border:none;outline:none;font-size:16px;background:#2a2a2a;color:white;" placeholder="Your Name">
             <button class="primary-btn" id="start-btn" style="width:100%;justify-content:center;">Let's Go</button>
