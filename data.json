@@ -110,16 +110,22 @@
       "img": "https://images.unsplash.com/photo-1561359313-0639aad49ca6?auto=format&fit=crop&q=80&w=800",
       "attractions": [
         {
-          "name": "Dashashwamedh Ghat",
-          "lat": 25.306,
-          "lng": 83.0097,
-          "img": "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&q=80&w=800"
-        },
-        {
           "name": "Kashi Vishwanath Temple",
           "lat": 25.3109,
           "lng": 83.0107,
-          "img": "https://images.unsplash.com/photo-1622306782245-c42a2202611a?auto=format&fit=crop&q=80&w=800"
+          "img": "/assets/attractions/kashi_temple.jpg"
+        },
+        {
+          "name": "Dashashwamedh Ghat (Ganga Aarti)",
+          "lat": 25.306,
+          "lng": 83.0097,
+          "img": "/assets/attractions/ganga_aarti.jpg"
+        },
+        {
+          "name": "Sarnath",
+          "lat": 25.3811,
+          "lng": 83.0214,
+          "img": "/assets/attractions/sarnath.jpg"
         }
       ]
     },
@@ -135,19 +141,19 @@
           "name": "Golden Temple",
           "lat": 31.62,
           "lng": 74.8765,
-          "img": "https://images.unsplash.com/photo-1514222026365-5c1cfad8cba4?auto=format&fit=crop&q=80&w=800"
+          "img": "/assets/attractions/golden_temple.jpg"
         },
         {
           "name": "Jallianwala Bagh",
           "lat": 31.6206,
           "lng": 74.8799,
-          "img": "https://images.unsplash.com/photo-1563211516-43b95a864d4b?auto=format&fit=crop&q=80&w=800"
+          "img": "/assets/attractions/jallianwala_bagh.jpg"
         },
         {
           "name": "Wagah Border",
           "lat": 31.6049,
           "lng": 74.5739,
-          "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"
+          "img": "/assets/attractions/wagah_border.jpg"
         }
       ]
     },
@@ -185,11 +191,30 @@
     "ooty": {
       "title": "Ooty",
       "state": "Tamil Nadu",
-      "lat": 11.41,
-      "lng": 76.7,
-      "description": "A scenic hill station in the Nilgiri Hills of South India.",
-      "img": "https://images.unsplash.com/photo-1596422846543-74c6ba68a4d4?auto=format&fit=crop&q=80&w=800",
-      "attractions": []
+      "lat": 11.4102,
+      "lng": 76.695,
+      "description": "Charming hill station known for lakes and botanical gardens.",
+      "img": "/assets/trending/ooty.jpg",
+      "attractions": [
+        {
+          "name": "Ooty Lake",
+          "lat": 11.4116,
+          "lng": 76.6896,
+          "img": "/assets/trending_attractions/ooty_lake.jpg"
+        },
+        {
+          "name": "Botanical Garden",
+          "lat": 11.419,
+          "lng": 76.7118,
+          "img": "/assets/trending_attractions/botanical_garden.jpg"
+        },
+        {
+          "name": "Doddabetta Peak",
+          "lat": 11.4004,
+          "lng": 76.735,
+          "img": "/assets/trending_attractions/doddabetta_peak.jpg"
+        }
+      ]
     },
     "alleppey": {
       "title": "Alleppey",
@@ -255,35 +280,54 @@
       "state": "Himachal Pradesh",
       "lat": 32.2396,
       "lng": 77.1887,
-      "description": "A high-altitude Himalayan resort town perfect for trekking and snow.",
-      "img": "https://images.unsplash.com/photo-1626714485864-793540c9535c?auto=format&fit=crop&q=80&w=800",
-      "attractions": []
+      "description": "Popular hill station known for snow, mountains, and adventure activities.",
+      "img": "/assets/trending/manali.jpg",
+      "attractions": [
+        {
+          "name": "Solang Valley",
+          "lat": 32.3166,
+          "lng": 77.1558,
+          "img": "/assets/trending_attractions/solang_valley.jpg"
+        },
+        {
+          "name": "Rohtang Pass",
+          "lat": 32.3716,
+          "lng": 77.2464,
+          "img": "/assets/trending_attractions/rohtang_pass.jpg"
+        },
+        {
+          "name": "Hadimba Temple",
+          "lat": 32.2483,
+          "lng": 77.1747,
+          "img": "/assets/trending_attractions/hadimba_temple.jpg"
+        }
+      ]
     },
     "munnar": {
       "title": "Munnar",
       "state": "Kerala",
       "lat": 10.0889,
       "lng": 77.0595,
-      "description": "Endless rolling tea gardens covered dynamically in lush green.",
-      "img": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800",
+      "description": "Scenic hill station famous for tea plantations and cool climate.",
+      "img": "/assets/trending/munnar.jpg",
       "attractions": [
         {
+          "name": "Tea Gardens",
+          "lat": 10.0852,
+          "lng": 77.0608,
+          "img": "/assets/trending_attractions/tea_gardens.jpg"
+        },
+        {
           "name": "Eravikulam National Park",
-          "lat": 10.2185,
+          "lat": 10.15,
           "lng": 77.05,
-          "img": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800"
+          "img": "/assets/trending_attractions/eravikulam_park.jpg"
         },
         {
           "name": "Mattupetty Dam",
-          "lat": 10.1031,
-          "lng": 77.1243,
-          "img": "https://images.unsplash.com/photo-1569931727931-1559196b27d4?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Tea Museum",
-          "lat": 10.0931,
-          "lng": 77.0494,
-          "img": "https://images.unsplash.com/photo-1605540436563-5bca919ae766?auto=format&fit=crop&q=80&w=800"
+          "lat": 10.1065,
+          "lng": 77.1235,
+          "img": "/assets/trending_attractions/mattupetty_dam.jpg"
         }
       ]
     },
@@ -434,6 +478,202 @@
           "lat": 15.33,
           "lng": 76.45,
           "img": "https://images.unsplash.com/photo-1600021612083-d5a228f9d09c?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
+    },
+    "thrissur": {
+      "title": "Thrissur",
+      "state": "Kerala",
+      "lat": 10.5276,
+      "lng": 76.2144,
+      "description": "Cultural capital of Kerala, known for its grand temple festivals and heritage.",
+      "img": "https://images.unsplash.com/photo-1593351415075-3bac9f45c877?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Vadakkunnathan Temple",
+          "lat": 10.524,
+          "lng": 76.213,
+          "img": "/assets/attractions/vadakkunnathan_temple.jpg"
+        },
+        {
+          "name": "Thrissur Zoo",
+          "lat": 10.531,
+          "lng": 76.22,
+          "img": "/assets/attractions/thrissur_zoo.jpg"
+        },
+        {
+          "name": "Athirappilly Waterfalls",
+          "lat": 10.284,
+          "lng": 76.569,
+          "img": "/assets/attractions/athirappilly_waterfalls.jpg"
+        }
+      ]
+    },
+    "ayodhya": {
+      "title": "Ayodhya",
+      "state": "Uttar Pradesh",
+      "lat": 26.7996,
+      "lng": 82.2042,
+      "description": "Sacred birthplace of Lord Rama and an important spiritual destination.",
+      "img": "https://images.unsplash.com/photo-1622306782245-c42a2202611a?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Ram Janmabhoomi Temple",
+          "lat": 26.797,
+          "lng": 82.195,
+          "img": "/assets/attractions/ram_janmabhoomi.jpg"
+        },
+        {
+          "name": "Hanuman Garhi",
+          "lat": 26.796,
+          "lng": 82.203,
+          "img": "/assets/attractions/hanuman_garhi.jpg"
+        },
+        {
+          "name": "Kanak Bhawan",
+          "lat": 26.8,
+          "lng": 82.198,
+          "img": "/assets/attractions/kanak_bhawan.jpg"
+        }
+      ]
+    },
+    "arunachal": {
+      "title": "Arunachal Pradesh",
+      "state": "Arunachal Pradesh",
+      "lat": 27.0844,
+      "lng": 93.6053,
+      "description": "Beautiful northeastern region known for tribal culture and scenic landscapes.",
+      "img": "https://images.unsplash.com/photo-1626014903706-e7d6270fc6da?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Tawang Monastery",
+          "lat": 27.585,
+          "lng": 91.859,
+          "img": "/assets/attractions/tawang_monastery.jpg"
+        },
+        {
+          "name": "Ziro Valley",
+          "lat": 27.534,
+          "lng": 93.832,
+          "img": "/assets/attractions/ziro_valley.jpg"
+        },
+        {
+          "name": "Sela Pass",
+          "lat": 27.51,
+          "lng": 92.05,
+          "img": "/assets/attractions/sela_pass.jpg"
+        }
+      ]
+    },
+    "madurai": {
+      "title": "Madurai",
+      "state": "Tamil Nadu",
+      "lat": 9.9252,
+      "lng": 78.1198,
+      "description": "Historic temple city known for Meenakshi Amman Temple and vibrant culture.",
+      "img": "https://images.unsplash.com/photo-1596422846543-74c6ba68a4d4?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Meenakshi Amman Temple",
+          "lat": 9.919,
+          "lng": 78.119,
+          "img": "/assets/attractions/meenakshi_temple.jpg"
+        },
+        {
+          "name": "Thirumalai Nayakkar Palace",
+          "lat": 9.914,
+          "lng": 78.123,
+          "img": "/assets/attractions/nayakkar_palace.jpg"
+        },
+        {
+          "name": "Gandhi Memorial Museum",
+          "lat": 9.932,
+          "lng": 78.139,
+          "img": "/assets/attractions/gandhi_museum.jpg"
+        }
+      ]
+    },
+    "coorg": {
+      "title": "Coorg",
+      "state": "Karnataka",
+      "lat": 12.3375,
+      "lng": 75.8069,
+      "description": "Beautiful coffee region with lush greenery and waterfalls.",
+      "img": "/assets/trending/coorg.jpg",
+      "attractions": [
+        {
+          "name": "Abbey Falls",
+          "lat": 12.4554,
+          "lng": 75.7208,
+          "img": "/assets/trending_attractions/abbey_falls.jpg"
+        },
+        {
+          "name": "Raja's Seat",
+          "lat": 12.4172,
+          "lng": 75.7378,
+          "img": "/assets/trending_attractions/rajas_seat.jpg"
+        },
+        {
+          "name": "Dubare Elephant Camp",
+          "lat": 12.3686,
+          "lng": 75.9056,
+          "img": "/assets/trending_attractions/dubare_camp.jpg"
+        }
+      ]
+    },
+    "darjeeling": {
+      "title": "Darjeeling",
+      "state": "West Bengal",
+      "lat": 27.036,
+      "lng": 88.2627,
+      "description": "Famous for tea estates and views of the Himalayas.",
+      "img": "/assets/trending/darjeeling.jpg",
+      "attractions": [
+        {
+          "name": "Tiger Hill",
+          "lat": 27.0,
+          "lng": 88.2433,
+          "img": "/assets/trending_attractions/tiger_hill.jpg"
+        },
+        {
+          "name": "Batasia Loop",
+          "lat": 27.021,
+          "lng": 88.2475,
+          "img": "/assets/trending_attractions/batasia_loop.jpg"
+        },
+        {
+          "name": "Toy Train",
+          "lat": 27.0425,
+          "lng": 88.2661,
+          "img": "/assets/trending_attractions/toy_train.jpg"
+        }
+      ]
+    },
+    "shimla": {
+      "title": "Shimla",
+      "state": "Himachal Pradesh",
+      "lat": 31.1048,
+      "lng": 77.1734,
+      "description": "Historic hill station with colonial architecture and cool weather.",
+      "img": "/assets/trending/shimla.jpg",
+      "attractions": [
+        {
+          "name": "Mall Road",
+          "lat": 31.1044,
+          "lng": 77.1722,
+          "img": "/assets/trending_attractions/mall_road.jpg"
+        },
+        {
+          "name": "Kufri",
+          "lat": 31.1,
+          "lng": 77.2667,
+          "img": "/assets/trending_attractions/kufri.jpg"
+        },
+        {
+          "name": "Jakhoo Temple",
+          "lat": 31.1014,
+          "lng": 77.1852,
+          "img": "/assets/trending_attractions/jakhoo_temple.jpg"
         }
       ]
     }

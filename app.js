@@ -291,9 +291,58 @@ document.addEventListener('DOMContentLoaded', () => {
         festivalInfoText.textContent = `Discover incredible places hosting ${festivalInfo.event}`;
         // heroSection.style.backgroundImage = `url('${festivalInfo.bg}')`; // PRESERVE ELEGANT BACKGROUND
 
-        // Render Carousels using the mapping to cities database
-        renderCarousel('special-carousel', appData.topDestinationsThisMonth);
-        renderCarousel('trending-carousel', appData.trendingDestinations);
+        // Custom rendering for Special in April Section
+        const specialCarousel = document.getElementById('special-carousel');
+        if (specialCarousel) {
+            specialCarousel.innerHTML = '';
+            const aprilFestivals = [
+                { id: 'amritsar', title: 'Amritsar, Punjab', tag: 'Vaisakhi', tagline: 'Harvest Festival Celebration', img: '/assets/festivals/vaisakhi.jpg' },
+                { id: 'thrissur', title: 'Thrissur, Kerala', tag: 'Thrissur Pooram', tagline: 'Grand Temple Festival', img: '/assets/festivals/thrissur_pooram.jpg' },
+                { id: 'varanasi', title: 'Varanasi, Uttar Pradesh', tag: 'Ganga Aarti', tagline: 'Sacred Evening Ritual', img: '/assets/festivals/ganga_aarti.jpg' },
+                { id: 'ayodhya', title: 'Ayodhya, Uttar Pradesh', tag: 'Ram Navami', tagline: 'Birth of Lord Rama Celebration', img: '/assets/festivals/ram_navami.jpg' },
+                { id: 'arunachal', title: 'Arunachal Pradesh', tag: 'Mopin Festival', tagline: 'Tribal Cultural Celebration', img: '/assets/festivals/mopin_festival.jpg' },
+                { id: 'madurai', title: 'Madurai, Tamil Nadu', tag: 'Chithirai Festival', tagline: 'Meenakshi Temple Celebration', img: '/assets/festivals/chithirai_festival.jpg' }
+            ];
+            aprilFestivals.forEach(item => {
+                const cardAnchor = document.createElement('a');
+                cardAnchor.href = `/city/${item.id}`;
+                cardAnchor.className = 'card';
+                cardAnchor.style.textDecoration = 'none';
+                cardAnchor.style.color = 'inherit';
+                
+                let tagHTML = `<div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(20,20,20,0.75)); color: #FFD700; padding: 6px 12px; border-radius: 8px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0px 2px 6px rgba(0,0,0,0.9); border: 1px solid rgba(255, 215, 0, 0.8); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); z-index: 2; pointer-events: none;">${item.tag}</div>`;
+                cardAnchor.innerHTML = `${tagHTML}<img src="${item.img}" alt="${item.tag}">
+                                      <div class="card-title">${item.title}</div>
+                                      <div style="font-size: 13px; color: var(--text-muted, gray); margin-top: 5px;">${item.tagline}</div>`;
+                specialCarousel.appendChild(cardAnchor);
+            });
+        }
+        
+        const trendingCarousel = document.getElementById('trending-carousel');
+        if (trendingCarousel) {
+            trendingCarousel.innerHTML = '';
+            const trendingItems = [
+                { id: 'manali', title: 'Manali', tag: 'Snowy Mountain Escape', badge: 'Cool Escape', img: '/assets/trending/manali.jpg' },
+                { id: 'munnar', title: 'Munnar', tag: 'Tea Hills Retreat', badge: 'Tea Retreat', img: '/assets/trending/munnar.jpg' },
+                { id: 'coorg', title: 'Coorg', tag: 'Coffee Nature Vibes', badge: 'Coffee Hills', img: '/assets/trending/coorg.jpg' },
+                { id: 'ooty', title: 'Ooty', tag: 'Cool Hill Getaway', badge: 'Hill Getaway', img: '/assets/trending/ooty.jpg' },
+                { id: 'darjeeling', title: 'Darjeeling', tag: 'Himalayan Beauty', badge: 'Mountain Views', img: '/assets/trending/darjeeling.jpg' },
+                { id: 'shimla', title: 'Shimla', tag: 'Summer Hill Charm', badge: 'Summer Chill', img: '/assets/trending/shimla.jpg' }
+            ];
+            trendingItems.forEach(item => {
+                const cardAnchor = document.createElement('a');
+                cardAnchor.href = `/city/${item.id}`;
+                cardAnchor.className = 'card';
+                cardAnchor.style.textDecoration = 'none';
+                cardAnchor.style.color = 'inherit';
+                cardAnchor.style.position = 'relative'; // Ensure absolute positioning bounds correctly
+                cardAnchor.innerHTML = `<div style="position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); color: #FFFFFF; padding: 6px 10px; border-radius: 10px; font-weight: 600; font-size: 12px; z-index: 2; pointer-events: none;">${item.badge}</div>
+                                      <img src="${item.img}" alt="${item.title}">
+                                      <div class="card-title">${item.title}</div>
+                                      <div style="font-size: 13px; color: var(--text-muted, gray); margin-top: 5px;">${item.tag}</div>`;
+                trendingCarousel.appendChild(cardAnchor);
+            });
+        }
         
         // Render photo-based Mood Folders
         renderMoodFolders();
@@ -306,7 +355,12 @@ document.addEventListener('DOMContentLoaded', () => {
             globalTravelerSelect.addEventListener('change', () => {
                 // To simulate UI feeling "alive", we re-render carousels 
                 // in reality we might sort or filter the list based on family vs solo etc
-                renderCarousel('trending-carousel', [...appData.trendingDestinations].reverse());
+                const trendCar = document.getElementById('trending-carousel');
+                if(trendCar) {
+                    const cards = Array.from(trendCar.children);
+                    trendCar.innerHTML = '';
+                    cards.reverse().forEach(c => trendCar.appendChild(c));
+                }
             });
         }
     }
