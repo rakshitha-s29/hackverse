@@ -304,8 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ==========================================
-    // NAMASTE NAVIGATOR AI STATE MACHINE
+        // ==========================================
+    // NAMASTE NAVIGATOR AI AGENT
     // ==========================================
     const aiGuideBtn = document.getElementById('ai-guide');
     const chatbox = document.getElementById('chatbox');
@@ -315,25 +315,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInputContainer = document.getElementById('chat-input-container');
 
     let chatOpen = false;
-    let chatState = 0; 
     let finalItineraryMarkup = "";
     
-    let tripData = {
-        origin: '',
-        mood: '',
-        days: '',
-        people: '',
-        budget: '',
-        destination: '',
-        editStr: '',
-        saveContent: ''
+    // Core session memory for the Python NLP Engine
+    let agentState = {
+        budget: null,
+        days: null,
+        interest: null,
+        destination: null,
+        saveContent: null,
+        ready_to_save: false
     };
 
     function initChatStateMachine(name) {
-        if(chatMessages && chatState === 0) {
+        if(chatMessages && chatMessages.children.length === 0) {
             const sel = document.getElementById('global-traveler-select');
-            if(sel) tripData.people = sel.value;
-            addMessage(`Namaste ${name}! I'm Namaste Navigator. Let's build your perfect, hyper-customized trip! First, <b>Where are you traveling from?</b> (e.g., Bangalore, Delhi, New York)`, 'ai');
+            let travelerType = sel ? sel.value : "2";
+            agentState.people = travelerType;
+            addMessage(`Namaste ${name}! I am your personal AI Travel Agent.<br><br>Tell me what you're dreaming of! Try: <b>"Plan a 3 day trip to Mysore under 6000"</b> or <b>"Suggest a cheap beach weekend."</b>`, 'ai');
         }
     }
 
@@ -365,86 +364,57 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(text, 'user');
         userInput.value = '';
 
-        if(chatState === 0) {
-            tripData.origin = text;
-            chatState = 1;
-            setTimeout(() => addMessage(`Got it, starting from ${tripData.origin}. Now, <b>what is your mood?</b> (e.g., Happy, Peaceful, Romantic, Historic)`, 'ai'), 400);
+        if(agentState.ready_to_save && (text.toLowerCase().includes('confirm') || text.toLowerCase().includes('yes') || text.toLowerCase().includes('save'))) {
+            let list = JSON.parse(localStorage.getItem('indiaExpItineraryList')) || [];
+            list.push({
+                id: Date.now(),
+                destination: agentState.destination || "Custom Trip",
+                content: agentState.saveContent || finalItineraryMarkup,
+                date: new Date().toLocaleDateString()
+            });
+            localStorage.setItem('indiaExpItineraryList', JSON.stringify(list));
+            
+            addMessage("<b>Itinerary Confirmed & Saved seamlessly to your Dashboard!</b> Redirecting...", 'ai');
+            chatInputContainer.style.display = 'none';
+            setTimeout(() => window.location.href = '/itinerary', 2000);
+            return;
         }
-        else if(chatState === 1) {
-            tripData.mood = text;
-            chatState = 2;
-            setTimeout(() => addMessage("Excellent! How many days do you plan to stay?", 'ai'), 400);
-        } 
-        else if(chatState === 2) {
-            tripData.days = text;
-            chatState = 3;
-            const sel = document.getElementById('global-traveler-select');
-            if(sel && sel.value !== "") tripData.people = sel.value;
-            setTimeout(() => addMessage(`Great. How many people are traveling? (Currently set to ${tripData.people || 'unknown'}, type a number to override or 'keep')`, 'ai'), 400);
-        }
-        else if(chatState === 3) {
-            if(text.toLowerCase() !== "keep" && text !== "") tripData.people = text;
-            chatState = 4;
-            setTimeout(() => addMessage("Almost done! What is your exact numerical budget capacity? (e.g., 3500, 50000)", 'ai'), 400);
-        }
-        else if(chatState === 4) {
-            tripData.budget = text;
-            chatState = 5;
-            callBackendGenerator('suggest_places');
-        }
-        else if(chatState === 5) {
-             tripData.destination = text;
-             chatState = 6;
-             callBackendGenerator('generate_itinerary');
-        }
-        else if(chatState === 6) {
-            // Confirm or Edit
-            if(text.toLowerCase().includes('confirm') || text.toLowerCase().includes('yes') || text.toLowerCase().includes('save') || text.toLowerCase().includes('fine') || text.toLowerCase().includes('looks good')) {
-                
-                let list = JSON.parse(localStorage.getItem('indiaExpItineraryList')) || [];
-                list.push({
-                    id: Date.now(),
-                    destination: tripData.destination || "Custom Trip",
-                    content: tripData.saveContent || finalItineraryMarkup, // Uses the rigidly pure save string
-                    date: new Date().toLocaleDateString()
-                });
-                localStorage.setItem('indiaExpItineraryList', JSON.stringify(list));
-                
-                addMessage("<b>Itinerary Confirmed & Saved cleanly to your Dashboard!</b> Redirecting...", 'ai');
-                chatInputContainer.style.display = 'none';
-                setTimeout(() => window.location.href = '/itinerary', 2000);
-            } else {
-                tripData.editStr = text;
-                callBackendGenerator('edit_itinerary');
-            }
-        }
+
+        callBackendAgent(text);
     }
 
-    function callBackendGenerator(reqType) {
+    function callBackendAgent(userText) {
          const typingId = 'typing-' + Date.now();
          const typingMsg = document.createElement('div');
          typingMsg.className = 'msg ai';
          typingMsg.id = typingId;
-         typingMsg.innerHTML = '<i>Processing your rigorous parameters...</i>';
+         typingMsg.innerHTML = '<i>Analyzing your request...</i>';
          chatMessages.appendChild(typingMsg);
          chatMessages.scrollTop = chatMessages.scrollHeight;
 
          fetch('/api/chat', {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify({ state: tripData, reqType: reqType })
+             body: JSON.stringify({ text: userText, state: agentState })
          })
          .then(r => r.json())
          .then(data => {
              document.getElementById(typingId).remove();
+             
+             // Update our continuous memory
+             if(data.newState) {
+                 agentState = data.newState;
+             }
+             
              finalItineraryMarkup = data.displayMarkup;
-             tripData.saveContent = data.saveMarkup; // Store the separated pure itinerary internally!
+             if(data.saveMarkup) agentState.saveContent = data.saveMarkup;
+             
              addMessage(data.displayMarkup, 'ai');
          })
          .catch(e => {
              console.error(e);
              document.getElementById(typingId).remove();
-             addMessage("Sorry, I'm having trouble connecting to the network.", 'ai');
+             addMessage("Sorry, the AI reasoning engine is currently unreachable.", 'ai');
          });
     }
 

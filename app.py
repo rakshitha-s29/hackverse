@@ -48,132 +48,209 @@ def get_data():
         return jsonify(data)
     return jsonify({"error": "Failed to load database"}), 500
 
+
+import re
+
 @app.route('/api/chat', methods=['POST'])
 def handle_chat():
     req = request.get_json()
     if not req:
         return jsonify({"displayMarkup": "Error processing request.", "saveMarkup": "Error"}), 400
         
+    text = req.get('text', '')
     state = req.get('state', {})
-    req_type = req.get('reqType', 'generate_itinerary')
     
-    origin = state.get('origin', 'Unknown').title()
-    mood = state.get('mood', 'happy').title()
-    days = state.get('days', '2')
-    people = state.get('people', '2')
-    budget = state.get('budget', '3500').title()
-    custom_edit = state.get('editStr', '')
-    chosen_dest = state.get('destination', '').title()
+    # 1. NLP EXTRACTION
+    text_lower = text.lower()
     
-    if str(people) == "1":
-        people_str = "solo traveler"
-    else:
-        people_str = f"a group of {people}"
+    # Match budget
+    
+    clean_text = text_lower.replace(',', '').replace('k', '000')
+    budget_match = re.search(r'(\d{3,})', clean_text)
 
-    if req_type == 'suggest_places':
-        suggs = f"Based on your starting location of <b>{origin}</b>, your <b>{mood}</b> style, and budget format of <b>{budget}</b>, here are 5 perfect destinations for {people_str}:<br><br>"
+    if budget_match:
+        val = budget_match.group(1).replace(',', '')
+        state['budget'] = int(val)
         
-        suggs += f"<b>1. Delhi:</b> Suitable for your {mood} mood, with fantastic historical monuments that fit safely within your {budget} budget.<br>"
-        suggs += f"<b>2. Goa:</b> Good for your {mood} mood, offering laid-back beaches and fun nightlife tailored for your {budget} budget.<br>"
-        suggs += f"<b>3. Munnar:</b> Excellent for peace, featuring lush tea gardens and budget-flexible resorts spanning {budget}.<br>"
-        suggs += f"<b>4. Jaipur:</b> Great for royal heritage and exploring forts, with exceptional {budget} dining options.<br>"
-        suggs += f"<b>5. Dharamshala:</b> Perfect mountain getaway guaranteeing a {mood} relaxing trip with incredible {budget} cafes.<br><br>"
-        
-        suggs += "<b>Which place would you like to choose from these?</b> Or do you want to go to a particular place of your own?"
-        return jsonify({"displayMarkup": suggs, "saveMarkup": suggs})
-        
-    elif req_type in ['generate_itinerary', 'edit_itinerary']:
-        edit_note = ""
-        if custom_edit:
-            edit_note = f"<i>(Adjusted based on your specific request: {custom_edit})</i><br><br>"
+    # Match days
+    days_match = re.search(r'(\d+)\s*day', text_lower)
+    days_match = re.search(r'(\d+)\s*day', text_lower)
+    if not days_match:
+        # Check if they just wrote a number below 30 without saying 'days'
+        # if and only if we already asked for days
+        lone_num = re.search(r'^(\d{1,2})$', text_lower.strip())
+        if lone_num:
+            days_match = lone_num
 
-        # Comprehensive Real-World Dictionary mapped explicitly instead of generic texts
-        attractions = {
-            "Bangalore": {
-                "m1": "Lalbagh Botanical Garden walk", "l1": "Vidyarthi Bhavan Masala Dosa", "a1": "Cubbon Park & State Library", "s1": "Filter Coffee at CTR", "e1": "Vidhana Soudha & MG Road Pubs",
-                "m2": "Bangalore Palace exploration", "l2": "Nagarjuna Andhra Meals", "a2": "Visvesvaraya Museum", "s2": "Corner House Ice Cream", "e2": "Indiranagar Cafe Hopping"
-            },
-            "Chennai": {
-                "m1": "Kapaleeshwarar Temple visit", "l1": "Traditional Banana Leaf Meals at Murugan Idli", "a1": "Santhome Cathedral & DakshinaChitra", "s1": "Marina Beach sundal", "e1": "Evening stroll at Elliot's Beach",
-                "m2": "Government Museum deep dive", "l2": "Chettinad Cuisine at Anjappar", "a2": "Guindy National Park", "s2": "Local Filter Kaapi", "e2": "T Nagar shopping"
-            },
-            "Hyderabad": {
-                "m1": "Charminar & Mecca Masjid", "l1": "Authentic Biryani at Paradise or Shadab", "a1": "Chowmahalla Palace", "s1": "Irani Chai & Osmania Biscuits at Nimrah", "e1": "Boat ride at Hussain Sagar Lake",
-                "m2": "Golconda Fort Heritage Tour", "l2": "Mandi or Haleem depending on season", "a2": "Salar Jung Museum", "s2": "Karachi Bakery snacks", "e2": "Lumbini Park Laser Show"
-            },
-            "Mumbai": {
-                "m1": "Gateway of India & Taj Mahal Palace", "l1": "Britannia & Co. Berry Pulao", "a1": "Colaba Causeway shopping", "s1": "Vada Pav at Ashok or Juhu", "e1": "Sunset at Marine Drive (Queen's Necklace)",
-                "m2": "Elephanta Caves ferry tour", "l2": "Seafood at Trishna", "a2": "Chhatrapati Shivaji Maharaj Vastu Sangrahalaya", "s2": "Pani Puri hop", "e2": "Bandra Fort views"
-            },
-            "Kolkata": {
-                "m1": "Victoria Memorial & Maidan", "l1": "Awadhi Biryani at Arsalan", "a1": "Indian Museum", "s1": "Phuchka at Vivekananda Park", "e1": "Howrah Bridge & Princep Ghat boat ride",
-                "m2": "Dakshineswar Kali Temple", "l2": "Kosha Mangsho at Golbari", "a2": "College Street Book Market", "s2": "Rosogolla matching", "e2": "Park Street evening lights"
-            },
-            "Jaipur": {
-                "m1": "Amer Fort elephant/jeep ride", "l1": "Rajasthani Thali at Chokhi Dhani", "a1": "Hawa Mahal external tour", "s1": "Pyaaz Kachori at Rawat Mishtan", "e1": "Jal Mahal sunset views",
-                "m2": "City Palace & Jantar Mantar", "l2": "Laal Maas at Handi", "a2": "Albert Hall Museum", "s2": "Local snacks at Bapu Bazaar", "e2": "Nahargarh Fort night view"
-            },
-            "Goa": {
-                "m1": "Baga or Calangute Beach water sports", "l1": "Fish Thali at Ritz Classic", "a1": "Aguada Fort exploration", "s1": "Shack chilling & mocktails", "e1": "Tito's Lane Nightlife",
-                "m2": "Basilica of Bom Jesus heritage", "l2": "Vindaloo at local eatery", "a2": "Dona Paula Viewpoint", "s2": "Sunset River Cruise on Mandovi", "e2": "Anjuna Flea Market"
-            }
-        }
+    if days_match:
+        state['days'] = int(days_match.group(1))
+    elif 'weekend' in text_lower:
+        state['days'] = 2
         
-        # Generic fallback using location name
-        fallback = {
-            "m1": f"Local heritage walk around {chosen_dest} center", "l1": "Regional authentic lunch", "a1": f"Visit top-rated {chosen_dest} museums", "s1": "Local street treats", "e1": f"Dinner exploring {chosen_dest} culture",
-            "m2": f"Offbeat nature or monument tour near {chosen_dest}", "l2": "Traditional heavy meal", "a2": "Local crafts shopping", "s2": "Sunset vantage point viewing", "e2": "Farewell lounge or peaceful dinner"
-        }
-        
-        spots = attractions.get(chosen_dest, fallback)
-
-        try:
-            days_int = int(days)
-        except:
-            days_int = 2
+    # Match interest
+    interests = ['beach', 'nature', 'mountain', 'hill', 'cultural', 'historic', 'party', 'adventure']
+    for i in interests:
+        if i in text_lower:
+            state['interest'] = i
+            break
             
-        # 1) Generate PURE save text (No prompts, directly dashboard ready)
-        save_msg = f"{edit_note}<h3>Travel Plan: {origin} to {chosen_dest}</h3>"
-        save_msg += f"<p><b>Trip Parameters:</b><br>"
-        save_msg += f"• Mood: {mood}<br>• Group Size: {people_str}<br>• Budget Capacity: {budget}<br>• Duration: {days_int} Days</p><br>"
-        
-        save_msg += f"<h4>Day 1: Arrival & Exploration</h4>"
-        save_msg += f"<ul>"
-        save_msg += f"<li><b>09:00 AM:</b> Breakfast - Authentic local breakfast (Budget: {budget}).</li>"
-        save_msg += f"<li><b>10:30 AM:</b> Morning - {spots['m1']}.</li>"
-        save_msg += f"<li><b>01:30 PM:</b> Lunch - {spots['l1']}.</li>"
-        save_msg += f"<li><b>04:00 PM:</b> Afternoon - {spots['a1']}.</li>"
-        save_msg += f"<li><b>05:30 PM:</b> Snacks - {spots['s1']}.</li>"
-        save_msg += f"<li><b>08:00 PM:</b> Dinner - {spots['e1']}.</li>"
-        save_msg += f"</ul>"
+    # Match explicit destination
+    destinations = ['goa', 'mysore', 'delhi', 'coorg', 'munnar', 'jaipur', 'dharamshala', 'bangalore', 'chennai', 'mumbai', 'kolkata']
+    dest_match = re.search(r'to\s+([a-zA-Z]+)', text_lower)
+    if dest_match and dest_match.group(1) in destinations:
+        state['destination'] = dest_match.group(1).title()
+    else:
+        for d in destinations:
+            if d in text_lower:
+                state['destination'] = d.title()
+                break
 
-        if days_int > 1:
-            save_msg += f"<br><h4>Day 2 to {days_int}: Deep Dive</h4>"
-            save_msg += f"<ul>"
-            save_msg += f"<li><b>08:30 AM:</b> Breakfast - Premium continental/local spread.</li>"
-            save_msg += f"<li><b>10:00 AM:</b> Morning - {spots['m2']}.</li>"
-            save_msg += f"<li><b>01:00 PM:</b> Lunch - {spots['l2']}.</li>"
-            save_msg += f"<li><b>03:30 PM:</b> Afternoon - {spots['a2']}.</li>"
-            save_msg += f"<li><b>05:30 PM:</b> Snacks - {spots['s2']}.</li>"
-            save_msg += f"<li><b>08:30 PM:</b> Dinner - {spots['e2']}.</li>"
-            save_msg += f"</ul>"
+    # Increase budget hook
+    if 'increase budget' in text_lower or 'add budget' in text_lower:
+        num = re.search(r'by\s+(\d+)', text_lower)
+        if num and state.get('budget'):
+            state['budget'] += int(num.group(1))
+        elif state.get('budget'):
+            state['budget'] += 2000 # default increase
+            
+    # Add day hook
+    if 'add one more day' in text_lower or 'add a day' in text_lower:
+        if state.get('days'):
+            state['days'] += 1
 
-        # 2) Generate User-Friendly Conversational text wrapping the raw payload
-        display_msg = f"Ready! Since you're traveling from <b>{origin}</b>, here is your customized plan for <b>{chosen_dest}</b>.<br><br>"
-        display_msg += save_msg
-        
-        display_msg += f"<br><b>Transportation Context ({origin} to {chosen_dest}):</b><br>"
-        display_msg += f"- <i>Flight:</i> Fastest depending on connectivity. Highly recommended to maximize your {days}-day trip.<br>"
-        display_msg += f"- <i>Train:</i> Scenic & budget friendly depending on {budget}. Can range heavily from {origin}.<br>"
-        display_msg += f"- <i>Bus/Car:</i> Excellent for interstate neighboring logic.<br><br>"
-        
-        display_msg += f"<b>Next Steps:</b><br>"
-        display_msg += f"Is this fine, or do you want to add any tasks? (Type '<b>confirm</b>' to rigidly save this clean itinerary to your dashboard, or type changes like 'Skip breakfast' or 'Add more historical walking')."
-        
+    # Decrease budget hook
+    if 'make it cheaper' in text_lower or 'reduce budget' in text_lower or 'lower budget' in text_lower:
+        if state.get('budget'):
+            state['budget'] = int(state['budget'] * 0.8) # Reduce by 20%
+            
+    # Add adventure hook
+    if 'add adventure' in text_lower or 'more adventurous' in text_lower:
+        state['interest'] = 'adventure'
+
+
+    # 2. INTENT & FALLBACK HANDLING
+    if not state.get('budget') and not state.get('days'):
         return jsonify({
-            "displayMarkup": display_msg,
-            "saveMarkup": save_msg
+            "displayMarkup": "Hello there! I am your personal GuideGeek-style AI Travel Expert ✨! I am super excited to help you plan. To get started, could you let me know your **budget** and roughly **how many days** you are planning?",
+            "newState": state
         })
+    elif not state.get('budget'):
+        return jsonify({
+            "displayMarkup": f"A {state.get('days')}-day trip sounds absolutely fantastic! I am thrilled to help you design it. What is your **budget** for this trip? What's your **budget** for this trip?",
+            "newState": state
+        })
+    elif not state.get('days'):
+        return jsonify({
+            "displayMarkup": f"Perfect! With a healthy budget of ₹{state.get('budget')}, we can do a lot. Roughly how many **days** are you planning to travel?",
+            "newState": state
+        })
+
+    # 3. DECISION ENGINE
+    if not state.get('destination'):
+        budget = state.get('budget', 5000)
+        days = state.get('days', 2)
+        interest = state.get('interest', 'general')
+        
+        if interest == 'beach':
+            state['destination'] = 'Goa' if budget >= 5000 else 'Gokarna'
+        elif interest in ['nature', 'mountain', 'hill']:
+            state['destination'] = 'Munnar' if days > 2 else 'Coorg'
+        elif interest == 'cultural':
+            state['destination'] = 'Jaipur' if budget > 8000 else 'Mysore'
+        else:
+            state['destination'] = 'Mysore' # default fallback
+            
+    dest = state['destination']
+    days = state['days']
+    budget = state['budget']
+    interest = state.get('interest', 'leisure')
+
+    # 4. BUDGET SPLIT
+    t_split = int(budget * 0.25)
+    s_split = int(budget * 0.40)
+    f_split = int(budget * 0.35)
+    
+    improvement = ""
+
+    eco_reason = "Medium (Standard travel footprint)."
+    if interest in ['nature', 'mountain'] or budget < 10000:
+        eco_reason = "High 🌱 (Prioritizing local transport, homestays, and natural exploration deeply minimizes your footprint!)"
+        improvement += "<br><i>🌱 Eco-Tip: Carry a reusable water bottle and support local artisans to maximize your eco-score!</i>"
+    elif budget > 20000:
+        eco_reason = "Moderate (Premium travel usually involves flights)."
+        improvement += "<br><i>🌱 Eco-Tip: Select eco-certified luxury resorts to offset carbon emissions!</i>"
+
+    if budget < 5000:
+        improvement = "<i>💡 Tip: Consider taking a sleeper bus and staying in local hostels to easily meet this budget.</i>"
+    elif budget > 15000:
+        improvement = "<i>💡 Tip: Your budget supports premium transport. Look for fast flights and boutique hotels!</i>"
+
+    # 5. REVIEWS & RATINGS
+    reviews_db = {
+        'Goa': 'Highly rated for vibrant beaches, cafes, and nightlife.',
+        'Mysore': 'Famous for its deeply rich royal heritage and peaceful ambiance.',
+        'Munnar': 'Stunningly peaceful and scenic hill station with endless tea gardens.',
+        'Coorg': 'The Scotland of India; incredible coffee estates and misty weather.',
+        'Jaipur': 'Royal architecture, imposing forts, and world-class hospitality.',
+        'Delhi': 'A melting pot of centuries of history and vibrant street food.',
+        'Gokarna': 'A serene, budget-friendly alternative to Goa with untouched beaches.'
+    }
+    rev = reviews_db.get(dest, f"A fantastic choice offering unique experiences tailored to your {interest} style.")
+
+    # 6. ITINERARY GENERATION
+    itin_html = "<ul>"
+    itin_array = []
+    
+    # Day 1
+    itin_html += f"<li><b>Day 1: Arrival & Exploration</b><br> - Arrive in {dest} and Check-in to your accommodation.<br> - Afternoon: Explore the famous local centers.<br> - Evening: Enjoy regional dinner (Budget: ₹{int(f_split/days)}).</li>"
+    itin_array.append({"day": 1, "plan": "Arrival, Check-in, Local exploration, Regional dining."})
+    
+    # Day 2 to N
+    for d in range(2, days + 1):
+        if d == days:
+            itin_html += f"<li><b>Day {d}: Farewell & Departure</b><br> - Morning: Last minute shopping or relaxing breakfasts.<br> - Afternoon: Proceed to terminal/station for return trip.</li>"
+            itin_array.append({"day": d, "plan": "Farewell breakfasts, relaxed morning, return trip."})
+        else:
+            itin_html += f"<li><b>Day {d}: Sightseeing & Deep Dive</b><br> - Morning: Visit the top historical or scenic viewpoints of {dest}.<br> - Evening: Leisure walks and local street food.</li>"
+            itin_array.append({"day": d, "plan": "Main sightseeing, immersive local experiences."})
+    itin_html += "</ul>"
+
+    json_response = {
+        "destination": dest,
+        "itinerary": itin_array,
+        "budget_split": {"travel": t_split, "stay": s_split, "food": f_split},
+        "eco_score": eco_reason,
+        "review": rev,
+        "reason": f"Selected because it perfectly fits your {days}-day timeline and ₹{budget} budget constraints."
+    }
+    
+    # 7. RENDER MARKUPS
+    state['ready_to_save'] = True
+
+    display_msg = f"Great choice! Based on your budget of <b>₹{budget}</b> for <b>{days} days</b>, here’s a perfect plan for you ✨<br><br>"
+    display_msg += f"<h3>Trip to {dest}</h3>"
+    display_msg += f"<b>Destination Review:</b> {rev}<br>"
+    display_msg += f"<b>Why this location?</b> {json_response['reason']}<br><br>"
+    
+    display_msg += f"<b>Smart Budget Split (₹{budget}):</b><br>"
+    display_msg += f"➔ Travel: ₹{t_split}<br>➔ Stay: ₹{s_split}<br>➔ Food: ₹{f_split}<br>{improvement}<br><br>"
+    
+    display_msg += itin_html
+    
+    display_msg += f"<br>Does this look perfect? (Type <b>Confirm</b> to rigidly save this itinerary to your dashboard, or say things like 'Increase budget by 2000' or 'Add one more day')."
+
+    # Save markup (clean variant for dashboard)
+    save_msg = f"<h3>Trip to {dest} ({days} Days / ₹{budget})</h3>"
+    save_msg += f"<b>Review:</b> {rev}<br>"
+    save_msg += f"<b>Budget:</b> Travel: ₹{t_split} | Stay: ₹{s_split} | Food: ₹{f_split}<br>"
+    save_msg += itin_html
+
+    return jsonify({
+        "displayMarkup": display_msg,
+        "saveMarkup": save_msg,
+        "newState": state,
+        "agentData": json_response
+    })
 
 if __name__ == '__main__':
     print("Starting India Travel Backend on http://127.0.0.1:5000")
