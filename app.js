@@ -81,24 +81,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const loginBtn = document.getElementById('login-btn');
         if(loginBtn) {
-            loginBtn.addEventListener('click', () => {
-                const loginIdentifier = document.getElementById('login-identifier');
-                let id = loginIdentifier.value.trim() || 'Traveler';
-                let username = id.includes('@') ? id.split('@')[0] : id;
-                launchApp({ username: username, email: id.includes('@') ? id : username+'@gmail.com' });
+            loginBtn.addEventListener('click', async () => {
+                const identifierInput = document.getElementById('login-identifier');
+                const passwordInput = document.getElementById('login-password');
+                
+                const id = identifierInput.value.trim();
+                const pw = passwordInput.value.trim();
+
+                if(!id || !pw) {
+                    alert("Please enter both username/email and password.");
+                    return;
+                }
+
+                try {
+                    const res = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ identifier: id, password: pw })
+                    });
+                    const data = await res.json();
+                    if(res.ok) {
+                        launchApp(data.user);
+                    } else {
+                        alert(data.error || "Login failed.");
+                    }
+                } catch(e) {
+                    console.error("Login Error:", e);
+                    alert("System error during login.");
+                }
             });
         }
 
         const signupBtn = document.getElementById('signup-btn');
         if(signupBtn) {
-            signupBtn.addEventListener('click', () => {
+            signupBtn.addEventListener('click', async () => {
                 const signupUsername = document.getElementById('signup-username');
                 const signupEmail = document.getElementById('signup-email');
-                let id = signupUsername.value.trim() || 'NewTraveler';
-                let email = signupEmail.value.trim() || id+'@gmail.com';
-                launchApp({ username: id, email: email });
+                const signupPassword = document.getElementById('signup-password');
+                const signupAge = document.getElementById('signup-age');
+                const signupMobile = document.getElementById('signup-mobile');
+
+                const user = {
+                    username: signupUsername.value.trim(),
+                    email: signupEmail.value.trim(),
+                    password: signupPassword.value.trim(),
+                    age: signupAge.value.trim(),
+                    mobile: signupMobile.value.trim()
+                };
+
+                if(!user.username || !user.email || !user.password || !user.mobile) {
+                    alert("Please fill in all required fields (Username, Email, Password, Mobile).");
+                    return;
+                }
+
+                try {
+                    const res = await fetch('/api/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(user)
+                    });
+                    const data = await res.json();
+                    if(res.ok) {
+                        alert("Signup successful! You can now log in.");
+                        authSignup.style.display = 'none';
+                        authLogin.style.display = 'block';
+                    } else {
+                        alert(data.error || "Signup failed.");
+                    }
+                } catch(e) {
+                    console.error("Signup Error:", e);
+                    alert("System error during signup.");
+                }
             });
         }
+
 
         document.getElementById('show-signup-btn')?.addEventListener('click', () => {
             authLogin.style.display = 'none';
@@ -242,13 +298,35 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render photo-based Mood Folders
         renderMoodFolders();
 
+        // Personalized Recommendations
+        fetchRecommendations(name);
+
         // Traveler logic altering recommendations locally
         if(globalTravelerSelect) {
             globalTravelerSelect.addEventListener('change', () => {
                 // To simulate UI feeling "alive", we re-render carousels 
                 // in reality we might sort or filter the list based on family vs solo etc
-                renderCarousel('trending-carousel', appData.trendingDestinations.reverse());
+                renderCarousel('trending-carousel', [...appData.trendingDestinations].reverse());
             });
+        }
+    }
+
+    async function fetchRecommendations(name) {
+        const section = document.getElementById('interests-section');
+        const carousel = document.getElementById('interests-carousel');
+        if(!section || !carousel) return;
+
+        try {
+            const res = await fetch(`/api/user/recommendations?username=${encodeURIComponent(name)}`);
+            const data = await res.json();
+            if(data.recommendations && data.recommendations.length > 0) {
+                section.style.display = 'block';
+                renderCarousel('interests-carousel', data.recommendations);
+            } else {
+                section.style.display = 'none';
+            }
+        } catch(err) {
+            console.error("Error fetching recommendations:", err);
         }
     }
 
@@ -296,13 +374,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const navbar = document.getElementById('navbar');
+    const backToTopBtn = document.getElementById('back-to-top');
+    const floatingHomeBtn = document.getElementById('floating-home');
+
     window.addEventListener('scroll', () => {
+        // Navbar scrolled state
         if(window.scrollY > 50 && navbar) {
             navbar.classList.add('scrolled');
         } else if(navbar) {
             navbar.classList.remove('scrolled');
         }
+
+        // Floating navigation visibility
+        if (window.scrollY > 300) {
+            if (backToTopBtn) backToTopBtn.classList.add('show');
+            if (floatingHomeBtn) floatingHomeBtn.classList.add('show');
+        } else {
+            if (backToTopBtn) backToTopBtn.classList.remove('show');
+            if (floatingHomeBtn) floatingHomeBtn.classList.remove('show');
+        }
     });
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    if (floatingHomeBtn) {
+        floatingHomeBtn.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+    }
+
+
 
         // ==========================================
     // NAMASTE NAVIGATOR AI AGENT
@@ -336,15 +444,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const chatBackdrop = document.getElementById('chat-backdrop');
+
     if(aiGuideBtn) {
         aiGuideBtn.addEventListener('click', () => {
             chatOpen = !chatOpen;
             if(chatOpen) {
                 chatbox.classList.add('active');
+                if(chatBackdrop) chatBackdrop.classList.add('active');
                 userInput.focus();
             } else {
                 chatbox.classList.remove('active');
+                if(chatBackdrop) chatBackdrop.classList.remove('active');
             }
+        });
+    }
+
+    if(chatBackdrop) {
+        chatBackdrop.addEventListener('click', () => {
+            chatOpen = false;
+            chatbox.classList.remove('active');
+            chatBackdrop.classList.remove('active');
         });
     }
 
@@ -373,6 +493,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 date: new Date().toLocaleDateString()
             });
             localStorage.setItem('indiaExpItineraryList', JSON.stringify(list));
+            
+            // Sync interests to backend for personalization
+            if(userName && agentState.interest) {
+                fetch('/api/user/update_interests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: userName,
+                        interests: [agentState.interest]
+                    })
+                }).catch(err => console.error("Failed to sync interests:", err));
+            }
             
             addMessage("<b>Itinerary Confirmed & Saved seamlessly to your Dashboard!</b> Redirecting...", 'ai');
             chatInputContainer.style.display = 'none';

@@ -31,11 +31,18 @@
     </svg>
 
     <nav class="navbar" id="navbar">
-        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location=\'/\'"></div>
+        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location='/'"></div>
         <div class="nav-links" style="display:flex; align-items:center;">
             <a href="/#home">Home</a>
             <a href="/#destinations">Destinations</a>
-            <a href="https://www.makemytrip.com/flights/" target="_blank">Transport</a>
+            <div class="nav-dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Transport <i class="ph ph-caret-down"></i></a>
+                <div class="nav-dropdown-content">
+                    <a href="https://www.google.com/travel/flights?gl=IN&hl=en" target="_blank"><i class="ph ph-airplane"></i> Flights</a>
+                    <a href="https://www.irctc.co.in/nget/train-search" target="_blank"><i class="ph ph-train"></i> Trains</a>
+                    <a href="https://www.redbus.in" target="_blank"><i class="ph ph-bus"></i> Buses</a>
+                </div>
+            </div>
             <a href="/itinerary" style="color:var(--primary-color);">My Itinerary</a>
             
             <div class="profile-menu-container" id="profile-menu-container" style="display:none; margin-left:20px;">
@@ -75,34 +82,30 @@
                 <img src="/logo.png" alt="Traveza" style="max-width: 90vw; max-height: 480px; margin: 0 auto 20px auto; display: block; object-fit: contain;">
                 <p class="festival-text" id="festival-info" style="display: none;">Discover the vibrant festivals of India happening this month.</p>
                 
-                <div class="hero-controls">
-                    <!-- Number of Travelers Section -->
-                    <div class="control-box">
-                        <i class="ph ph-users"></i>
-                        <select id="global-traveler-select">
-                            <option value="1">1 (Solo)</option>
-                            <option value="2" selected>2 (Couple)</option>
-                            <option value="3">3-4 (Group)</option>
-                            <option value="5">5+ (Family)</option>
-                        </select>
-                    </div>
-                    <a href="/explore.html" class="elegant-btn" id="explore-btn">
+                    <a href="/explore.html" class="elegant-btn" id="explore-btn" style="margin-left: 0;">
                         Explore <i class="ph ph-arrow-down"></i>
                     </a>
-                </div>
             </div>
         </section>
 
-        <!-- Current Month Recommendations -->
+        <!-- Based on Interests (Hidden initially) -->
+        <section class="section" id="interests-section" style="display: none;">
+            <h2 class="section-title">Based on your Interests</h2>
+            <div class="carousel-container" id="interests-carousel">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Current Season Recommendations -->
         <section class="section" id="destinations">
-            <h2 class="section-title" id="month-special-title">Special in Month</h2>
+            <h2 class="section-title" id="month-special-title">Special this Season</h2>
             <div class="carousel-container" id="special-carousel">
                 <!-- Injected via JS -->
             </div>
         </section>
 
         <section class="section">
-            <h2 class="section-title">Trending This Month</h2>
+            <h2 class="section-title">Trending this Season</h2>
             <div class="carousel-container" id="trending-carousel">
                 <!-- Injected via JS -->
             </div>
@@ -126,6 +129,9 @@
             <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Nala&backgroundColor=f5d76e" alt="Cute Bot" style="width:100%; height:100%; border-radius:50%;">
         </div>
     </div>
+
+    <!-- Agentic Chatbox Backdrop -->
+    <div class="chat-backdrop" id="chat-backdrop"></div>
 
     <!-- Agentic Chatbox -->
     <div class="chatbox-wrapper" id="chatbox">
@@ -248,6 +254,11 @@
             <button class="primary-btn w-100" id="save-profile-btn" style="justify-content:center; margin-top:10px;">Save Changes</button>
         </div>
     </div>
+
+    <!-- Floating Navigation -->
+    <button id="back-to-top" class="back-to-top" title="Go to top">
+        <i class="ph-bold ph-arrow-up"></i>
+    </button>
 
     <script src="/app.js"></script>
 </body>

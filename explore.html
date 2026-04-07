@@ -44,7 +44,7 @@
         }
 
         .explore-hero {
-            padding-top: 120px;
+            padding-top: 160px;
             text-align: center;
             margin-bottom: 20px;
         }
@@ -94,11 +94,18 @@
     </svg>
 
     <nav class="navbar scrolled" id="navbar">
-        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location=\'/\'"></div>
+        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location='/'"></div>
         <div class="nav-links" style="display:flex; align-items:center;">
             <a href="/">Home</a>
             <a href="/#destinations">Destinations</a>
-            <a href="https://www.makemytrip.com/flights/" target="_blank">Transport</a>
+            <div class="nav-dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Transport <i class="ph ph-caret-down"></i></a>
+                <div class="nav-dropdown-content">
+                    <a href="https://www.google.com/travel/flights?gl=IN&hl=en" target="_blank"><i class="ph ph-airplane"></i> Flights</a>
+                    <a href="https://www.irctc.co.in/nget/train-search" target="_blank"><i class="ph ph-train"></i> Trains</a>
+                    <a href="https://www.redbus.in" target="_blank"><i class="ph ph-bus"></i> Buses</a>
+                </div>
+            </div>
             <a href="/itinerary" style="color:var(--primary-color);">My Itinerary</a>
         </div>
     </nav>
@@ -120,6 +127,13 @@
         </div>
     </main>
 
+    <!-- Floating Navigation -->
+    <button id="back-to-top" class="back-to-top" title="Go to top">
+        <i class="ph-bold ph-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/app.js"></script>
     <script src="/explore.js"></script>
 </body>
 </html>

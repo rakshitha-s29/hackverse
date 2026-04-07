@@ -120,42 +120,119 @@
           "lat": 25.3109,
           "lng": 83.0107,
           "img": "https://images.unsplash.com/photo-1622306782245-c42a2202611a?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Ganga Aarti",
-          "lat": 25.3061,
-          "lng": 83.0098,
-          "img": "https://images.unsplash.com/photo-1549487565-d01f2fdeacac?auto=format&fit=crop&q=80&w=800"
         }
       ]
     },
-    "udaipur": {
-      "title": "Udaipur",
-      "state": "Rajasthan",
-      "lat": 24.5854,
-      "lng": 73.7125,
-      "description": "A highly romantic setting known as the City of Lakes.",
-      "img": "https://images.unsplash.com/photo-1561359313-0639aad49ca6?auto=format&fit=crop&q=80&w=800",
+    "amritsar": {
+      "title": "Amritsar",
+      "state": "Punjab",
+      "lat": 31.634,
+      "lng": 74.8723,
+      "description": "The golden spiritual and cultural center of the Sikh religion.",
+      "img": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800",
       "attractions": [
         {
-          "name": "Lake Pichola",
-          "lat": 24.5721,
-          "lng": 73.6789,
-          "img": "https://images.unsplash.com/photo-1588629080614-36a6cfbeaaba?auto=format&fit=crop&q=80&w=800"
+          "name": "Golden Temple",
+          "lat": 31.62,
+          "lng": 74.8765,
+          "img": "https://images.unsplash.com/photo-1514222026365-5c1cfad8cba4?auto=format&fit=crop&q=80&w=800"
         },
         {
-          "name": "City Palace",
-          "lat": 24.5764,
-          "lng": 73.6835,
-          "img": "https://images.unsplash.com/photo-1611029853922-8698bf4f4886?auto=format&fit=crop&q=80&w=800"
+          "name": "Jallianwala Bagh",
+          "lat": 31.6206,
+          "lng": 74.8799,
+          "img": "https://images.unsplash.com/photo-1563211516-43b95a864d4b?auto=format&fit=crop&q=80&w=800"
         },
         {
-          "name": "Jag Mandir",
-          "lat": 24.5673,
-          "lng": 73.6773,
-          "img": "https://images.unsplash.com/photo-1569992383856-787c88b0a9cd?auto=format&fit=crop&q=80&w=800"
+          "name": "Wagah Border",
+          "lat": 31.6049,
+          "lng": 74.5739,
+          "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"
         }
       ]
+    },
+    "rishikesh": {
+      "title": "Rishikesh",
+      "state": "Uttarakhand",
+      "lat": 30.0869,
+      "lng": 78.2676,
+      "description": "The Yoga Capital of the World, offering a perfect blend of spirituality and white-water rafting adventure.",
+      "img": "https://images.unsplash.com/photo-1549487565-d01f2fdeacac?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Lakshman Jhula",
+          "lat": 30.13,
+          "lng": 78.33,
+          "img": "https://images.unsplash.com/photo-1590408544465-98511ce5172c?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+          "name": "Triveni Ghat",
+          "lat": 30.1,
+          "lng": 78.3,
+          "img": "https://images.unsplash.com/photo-1622306782245-c42a2202611a?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
+    },
+    "gulmarg": {
+      "title": "Gulmarg",
+      "state": "Jammu & Kashmir",
+      "lat": 34.0484,
+      "lng": 74.3805,
+      "description": "A heart-stopping ski resort town in the Himalayas known as the meadow of flowers.",
+      "img": "https://images.unsplash.com/photo-1533512140645-f09c37129b9?auto=format&fit=crop&q=80&w=800",
+      "attractions": []
+    },
+    "ooty": {
+      "title": "Ooty",
+      "state": "Tamil Nadu",
+      "lat": 11.41,
+      "lng": 76.7,
+      "description": "A scenic hill station in the Nilgiri Hills of South India.",
+      "img": "https://images.unsplash.com/photo-1596422846543-74c6ba68a4d4?auto=format&fit=crop&q=80&w=800",
+      "attractions": []
+    },
+    "alleppey": {
+      "title": "Alleppey",
+      "state": "Kerala",
+      "lat": 9.4981,
+      "lng": 76.3388,
+      "description": "The Venice of the East, famous for houseboats in its tranquil backwaters.",
+      "img": "https://images.unsplash.com/photo-1593351415075-3bac9f45c877?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
+        {
+          "name": "Punnamada Lake",
+          "lat": 9.5,
+          "lng": 76.35,
+          "img": "https://images.unsplash.com/photo-1593351415075-3bac9f45c877?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
+    },
+    "kodaikanal": {
+      "title": "Kodaikanal",
+      "state": "Tamil Nadu",
+      "lat": 10.23,
+      "lng": 77.48,
+      "description": "The Princess of Hill Stations with misty landscapes and waterfalls.",
+      "img": "https://images.unsplash.com/photo-1518104593124-ac2e82a5eb9d?auto=format&fit=crop&q=80&w=800",
+      "attractions": []
+    },
+    "pelling": {
+      "title": "Pelling",
+      "state": "Sikkim",
+      "lat": 27.31,
+      "lng": 88.24,
+      "description": "A beautiful town in West Sikkim with breathtaking views of Mt. Kanchenjunga.",
+      "img": "https://images.unsplash.com/photo-1582510003544-4d00b7f7415e?auto=format&fit=crop&q=80&w=800",
+      "attractions": []
+    },
+    "ziro": {
+      "title": "Ziro Valley",
+      "state": "Arunachal Pradesh",
+      "lat": 27.59,
+      "lng": 93.84,
+      "description": "A quaint town and World Heritage site known for its pine hills and paddy fields.",
+      "img": "https://images.unsplash.com/photo-1626014903706-e7d6270fc6da?auto=format&fit=crop&q=80&w=800",
+      "attractions": []
     },
     "ladakh": {
       "title": "Leh Ladakh",
@@ -169,47 +246,7 @@
           "name": "Pangong Tso",
           "lat": 33.7297,
           "lng": 78.8983,
-          "img": "https://images.unsplash.com/photo-1610419353909-02660142e8cc?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Nubra Valley",
-          "lat": 34.6863,
-          "lng": 77.5673,
-          "img": "https://images.unsplash.com/photo-1618034509652-3ca791ef64ff?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Thiksey Monastery",
-          "lat": 34.056,
-          "lng": 77.6675,
-          "img": "https://images.unsplash.com/photo-1589140417936-e82df4bdfc5d?auto=format&fit=crop&q=80&w=800"
-        }
-      ]
-    },
-    "goa": {
-      "title": "Goa",
-      "state": "Goa",
-      "lat": 15.2993,
-      "lng": 74.124,
-      "description": "Sun, sand, and an unbeatable laid-back beach vacation atmosphere.",
-      "img": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=800",
-      "attractions": [
-        {
-          "name": "Baga Beach",
-          "lat": 15.5553,
-          "lng": 73.7517,
-          "img": "https://images.unsplash.com/photo-1548663806-121659929841?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Dudhsagar Falls",
-          "lat": 15.3144,
-          "lng": 74.3143,
-          "img": "https://images.unsplash.com/photo-1644400713506-64bc14bafea6?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Basilica of Bom Jesus",
-          "lat": 15.5009,
-          "lng": 73.9116,
-          "img": "https://images.unsplash.com/photo-1557004652-32a2468d6f1a?auto=format&fit=crop&q=80&w=800"
+          "img": "https://images.unsplash.com/photo-1533512140645-f09c37129b9?auto=format&fit=crop&q=80&w=800"
         }
       ]
     },
@@ -220,26 +257,7 @@
       "lng": 77.1887,
       "description": "A high-altitude Himalayan resort town perfect for trekking and snow.",
       "img": "https://images.unsplash.com/photo-1626714485864-793540c9535c?auto=format&fit=crop&q=80&w=800",
-      "attractions": [
-        {
-          "name": "Rohtang Pass",
-          "lat": 32.3716,
-          "lng": 77.2466,
-          "img": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Solang Valley",
-          "lat": 32.3167,
-          "lng": 77.15,
-          "img": "https://images.unsplash.com/photo-1554522723-bca323d9255a?auto=format&fit=crop&q=80&w=800"
-        },
-        {
-          "name": "Hadimba Temple",
-          "lat": 32.2468,
-          "lng": 77.1806,
-          "img": "https://images.unsplash.com/photo-1593693397690-28a2a89c93a0?auto=format&fit=crop&q=80&w=800"
-        }
-      ]
+      "attractions": []
     },
     "munnar": {
       "title": "Munnar",
@@ -381,31 +399,41 @@
         }
       ]
     },
-    "amritsar": {
-      "title": "Amritsar",
-      "state": "Punjab",
-      "lat": 31.634,
-      "lng": 74.8723,
-      "description": "The golden spiritual and cultural center of the Sikh religion.",
-      "img": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800",
+    "puducherry": {
+      "title": "Puducherry",
+      "state": "Pondicherry",
+      "lat": 11.9416,
+      "lng": 79.8083,
+      "description": "A charming French colonial town with mustard-yellow buildings and cozy cafes.",
+      "img": "https://images.unsplash.com/photo-1582510003544-4d00b7f7415e?auto=format&fit=crop&q=80&w=800",
       "attractions": [
         {
-          "name": "Golden Temple",
-          "lat": 31.62,
-          "lng": 74.8765,
-          "img": "https://images.unsplash.com/photo-1514222026365-5c1cfad8cba4?auto=format&fit=crop&q=80&w=800"
+          "name": "Promenade Beach",
+          "lat": 11.93,
+          "lng": 79.83,
+          "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800"
         },
         {
-          "name": "Jallianwala Bagh",
-          "lat": 31.6206,
-          "lng": 74.8799,
-          "img": "https://images.unsplash.com/photo-1563211516-43b95a864d4b?auto=format&fit=crop&q=80&w=800"
-        },
+          "name": "Auroville",
+          "lat": 12.0,
+          "lng": 79.81,
+          "img": "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&q=80&w=800"
+        }
+      ]
+    },
+    "hampi": {
+      "title": "Hampi",
+      "state": "Karnataka",
+      "lat": 15.335,
+      "lng": 76.46,
+      "description": "An ancient UNESCO World Heritage site known for its boulder-strewn landscape and majestic ruins.",
+      "img": "https://images.unsplash.com/photo-1600021612083-d5a228f9d09c?auto=format&fit=crop&q=80&w=800",
+      "attractions": [
         {
-          "name": "Wagah Border",
-          "lat": 31.6049,
-          "lng": 74.5739,
-          "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&q=80&w=800"
+          "name": "Virupaksha Temple",
+          "lat": 15.33,
+          "lng": 76.45,
+          "img": "https://images.unsplash.com/photo-1600021612083-d5a228f9d09c?auto=format&fit=crop&q=80&w=800"
         }
       ]
     }
@@ -413,41 +441,53 @@
   "topDestinationsThisMonth": [
     {
       "id": "jaipur",
-      "tag": "Jaipur Literature Fest"
+      "tag": "Royal Season"
     },
     {
       "id": "varanasi",
-      "tag": "Ganga Mahotsav"
+      "tag": "Spiritual Bliss"
     },
     {
       "id": "udaipur",
-      "tag": "Mewar Festival"
+      "tag": "Lake Romances"
     },
     {
       "id": "amritsar",
-      "tag": "Baisakhi Grand Vibes"
+      "tag": "Baisakhi Vibes"
     },
     {
       "id": "ladakh",
-      "tag": "Hemis Celebration"
+      "tag": "High Peaks"
+    },
+    {
+      "id": "rishikesh",
+      "tag": "Adventure Awaits"
     }
   ],
   "trendingDestinations": [
     {
       "id": "goa",
-      "tag": "Beach Season"
+      "tag": "Beach Parties"
     },
     {
       "id": "manali",
-      "tag": "Snow Adventure"
+      "tag": "Snowy Trails"
     },
     {
       "id": "munnar",
-      "tag": "Lush Greens"
+      "tag": "Tea Slopes"
     },
     {
-      "id": "delhi",
-      "tag": "Heritage Walks"
+      "id": "puducherry",
+      "tag": "French Vibes"
+    },
+    {
+      "id": "hampi",
+      "tag": "Monolith Magic"
+    },
+    {
+      "id": "alleppey",
+      "tag": "Backwater Bliss"
     }
   ],
   "moodDestinations": {

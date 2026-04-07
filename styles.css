@@ -65,6 +65,77 @@ body {
     color: var(--text-muted);
 }
 
+/* Nav Dropdown */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-dropdown .dropbtn {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    transition: color 0.3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(24, 24, 24, 0.98);
+    min-width: 180px;
+    box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.6);
+    z-index: 2001;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    margin-top: 0; /* Removed margin to close the gap */
+    top: 100%; /* Align to bottom of bar */
+    left: 0;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+/* Invisible bridge to prevent closing on gap hover */
+.nav-dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+}
+
+.nav-dropdown-content a {
+    color: var(--text-color);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-dropdown-content a:hover {
+    background-color: rgba(245, 215, 110, 0.1);
+    color: var(--primary-color);
+    padding-left: 25px;
+}
+
+.nav-dropdown:hover .nav-dropdown-content {
+    display: block;
+}
+
+.nav-dropdown:hover .dropbtn {
+    color: var(--primary-color);
+}
+
 /* Hero Section */
 .hero {
     position: relative;
@@ -161,7 +232,16 @@ body {
     color: var(--text-muted);
     margin-bottom: 15px;
     font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0,0,0,1); /* Critical for readability */
 }
+
+.festival-text {
+    font-size: 18px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9); /* Critical for readability */
+}
+
 
 .elegant-title {
     font-family: 'Playfair Display', serif;
@@ -459,6 +539,27 @@ body {
     color: #0b0b0b;
 }
 
+/* Chatbox Backdrop Overlay */
+.chat-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.chat-backdrop.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
 /* Chatbox */
 .chatbox-wrapper {
     position: fixed;
@@ -472,7 +573,7 @@ body {
     box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     display: flex;
     flex-direction: column;
-    z-index: 999;
+    z-index: 2000;
     transform: translateY(20px);
     opacity: 0;
     pointer-events: none;
@@ -934,3 +1035,46 @@ body {
     color: var(--text-muted);
     font-size: 13px;
 }
+
+/* Global Navigation Controls (Floating) */
+.back-to-top, .floating-home {
+    position: fixed;
+    left: 30px;
+    background: var(--bg-color);
+    border: 2px solid var(--primary-color); /* Thicker border for better visibility */
+    color: var(--primary-color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 15px rgba(245, 215, 110, 0.4), 0 10px 25px rgba(0,0,0,0.8); /* Glow effect */
+    font-size: 24px;
+}
+
+.back-to-top {
+    bottom: 120px; /* Positioned above Home button */
+}
+
+.floating-home {
+    bottom: 40px; /* Bottom-most */
+}
+
+.back-to-top.show, .floating-home.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover, .floating-home:hover {
+    background: var(--primary-color);
+    color: #000;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 0 30px rgba(245, 215, 110, 0.8);
+}
+

@@ -113,7 +113,7 @@
 <body>
 
     <nav class="navbar" id="navbar">
-        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location=\'/\'"></div>
+        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location='/'"></div>
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="/#destinations">Destinations</a>
@@ -150,6 +150,14 @@
             </div>
         </section>
     </main>
+
+    <!-- Floating Navigation -->
+    <button id="back-to-top" class="back-to-top" title="Go to top">
+        <i class="ph-bold ph-arrow-up"></i>
+    </button>
+    <button id="floating-home" class="floating-home" title="Go to Home">
+        <i class="ph-bold ph-house"></i>
+    </button>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
