@@ -563,14 +563,14 @@ body {
 /* Chatbox */
 .chatbox-wrapper {
     position: fixed;
-    bottom: 140px;
+    bottom: 120px;
     right: 40px;
-    width: 400px;
-    height: 550px;
-    background: #181818;
-    border-radius: 20px;
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    width: 480px;
+    height: 650px;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border-radius: 24px;
+    border: 1px solid rgba(245, 215, 110, 0.15);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 20px rgba(245, 215, 110, 0.05);
     display: flex;
     flex-direction: column;
     z-index: 2000;
@@ -607,6 +607,35 @@ body {
     gap: 15px;
 }
 
+.suggestion-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.suggestion-pills span {
+    background: rgba(245, 215, 110, 0.1);
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.suggestion-pills span:hover {
+    background: var(--primary-color);
+    color: #121212;
+    transform: scale(1.05);
+}
+
+.clarification-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
 .msg {
     max-width: 90%;
     padding: 12px 16px;
@@ -628,27 +657,56 @@ body {
 }
 
 .chat-input {
-    padding: 15px;
-    border-top: 1px solid var(--glass-border);
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(245, 215, 110, 0.1);
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    align-items: center;
+    border-radius: 0 0 24px 24px;
 }
 
 .chat-input input {
     flex: 1;
-    background: transparent;
-    border: none;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 18px;
+    border-radius: 12px;
     color: white;
     outline: none;
-    font-size: 14px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.chat-input input:focus {
+    border-color: var(--primary-color);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(245, 215, 110, 0.2);
+}
+
+.chat-input input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .chat-input button {
-    background: transparent;
+    background: var(--primary-color);
     border: none;
-    color: var(--primary-color);
+    color: #000;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.chat-input button:hover {
+    transform: scale(1.1) rotate(-10deg);
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
 /* Animations */

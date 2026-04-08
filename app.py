@@ -4,9 +4,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import os
 import sqlite3
+from dotenv import load_dotenv
+from agents.graph import build_graph
+from agents.state import TravelState
+
+load_dotenv()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 DATABASE = 'users.db'
+
+# Initialize the VoyageVeda Graph
+workflow = build_graph()
 
 def init_db():
     conn = sqlite3.connect(DATABASE)
@@ -240,197 +248,55 @@ def handle_chat():
     text = req.get('text', '')
     state = req.get('state', {})
     
-    # 1. NLP EXTRACTION
-    text_lower = text.lower()
-    
-    # Match budget
-    
-    clean_text = text_lower.replace(',', '').replace('k', '000')
-    budget_match = re.search(r'(\d{3,})', clean_text)
-
-    if budget_match:
-        val = budget_match.group(1).replace(',', '')
-        state['budget'] = int(val)
+    # 2. Invoke VoyageVeda Agentic Graph
+    try:
+        inputs = {
+            "messages": state.get("messages", []) + [text],
+            "destination": state.get('destination'),
+            "source": state.get('source'),
+            "budget": state.get('budget'),
+            "duration": state.get('duration'),
+            "preferences": state.get('preferences'),
+            "ready_to_save": False,
+            "ready_to_proceed": False
+        }
         
-    # Match days
-    days_match = re.search(r'(\d+)\s*day', text_lower)
-    days_match = re.search(r'(\d+)\s*day', text_lower)
-    if not days_match:
-        # Check if they just wrote a number below 30 without saying 'days'
-        # if and only if we already asked for days
-        lone_num = re.search(r'^(\d{1,2})$', text_lower.strip())
-        if lone_num:
-            days_match = lone_num
-
-    if days_match:
-        state['days'] = int(days_match.group(1))
-    elif 'weekend' in text_lower:
-        state['days'] = 2
+        # Run the workflow
+        final_state = workflow.invoke(inputs)
         
-    # Match interest
-    interests = ['beach', 'nature', 'mountain', 'hill', 'cultural', 'historic', 'party', 'adventure']
-    for i in interests:
-        if i in text_lower:
-            state['interest'] = i
-            break
-            
-    # Match explicit destination
-    destinations = ['goa', 'mysore', 'delhi', 'coorg', 'munnar', 'jaipur', 'dharamshala', 'bangalore', 'chennai', 'mumbai', 'kolkata']
-    dest_match = re.search(r'to\s+([a-zA-Z]+)', text_lower)
-    if dest_match and dest_match.group(1) in destinations:
-        state['destination'] = dest_match.group(1).title()
-    else:
-        for d in destinations:
-            if d in text_lower:
-                state['destination'] = d.title()
-                break
-
-    # Increase budget hook
-    if 'increase budget' in text_lower or 'add budget' in text_lower:
-        num = re.search(r'by\s+(\d+)', text_lower)
-        if num and state.get('budget'):
-            state['budget'] += int(num.group(1))
-        elif state.get('budget'):
-            state['budget'] += 2000 # default increase
-            
-    # Add day hook
-    if 'add one more day' in text_lower or 'add a day' in text_lower:
-        if state.get('days'):
-            state['days'] += 1
-
-    # Decrease budget hook
-    if 'make it cheaper' in text_lower or 'reduce budget' in text_lower or 'lower budget' in text_lower:
-        if state.get('budget'):
-            state['budget'] = int(state['budget'] * 0.8) # Reduce by 20%
-            
-    # Add adventure hook
-    if 'add adventure' in text_lower or 'more adventurous' in text_lower:
-        state['interest'] = 'adventure'
-
-
-    # 2. INTENT & FALLBACK HANDLING
-    if not state.get('budget') and not state.get('days'):
-        return jsonify({
-            "displayMarkup": "Hello there! I am your personal GuideGeek-style AI Travel Expert ✨! I am super excited to help you plan. To get started, could you let me know your **budget** and roughly **how many days** you are planning?",
-            "newState": state
+        # Update local state from Agent results
+        state.update({
+            "destination": final_state.get("destination"),
+            "source": final_state.get("source"),
+            "budget": final_state.get("budget"),
+            "duration": final_state.get("duration"),
+            "preferences": final_state.get("preferences"),
+            "travel_mode": final_state.get("travel_mode"),
+            "weather": final_state.get("weather"),
+            "ready_to_save": final_state.get("ready_to_save"),
+            "messages": final_state.get("messages")
         })
-    elif not state.get('budget'):
-        return jsonify({
-            "displayMarkup": f"A {state.get('days')}-day trip sounds absolutely fantastic! I am thrilled to help you design it. What is your **budget** for this trip? What's your **budget** for this trip?",
-            "newState": state
-        })
-    elif not state.get('days'):
-        return jsonify({
-            "displayMarkup": f"Perfect! With a healthy budget of ₹{state.get('budget')}, we can do a lot. Roughly how many **days** are you planning to travel?",
-            "newState": state
-        })
-
-    # 3. DECISION ENGINE
-    if not state.get('destination'):
-        budget = state.get('budget', 5000)
-        days = state.get('days', 2)
-        interest = state.get('interest', 'general')
         
-        if interest == 'beach':
-            state['destination'] = 'Goa' if budget >= 5000 else 'Gokarna'
-        elif interest in ['nature', 'mountain', 'hill']:
-            state['destination'] = 'Munnar' if days > 2 else 'Coorg'
-        elif interest == 'cultural':
-            state['destination'] = 'Jaipur' if budget > 8000 else 'Mysore'
+        return jsonify({
+            "displayMarkup": final_state.get("itinerary_markup") or "I've processed your request. What's next?",
+            "saveMarkup": final_state.get("itinerary_markup"),
+            "newState": state,
+            "agentData": final_state
+        })
+        
+    except Exception as e:
+        error_msg = str(e)
+        print(f"Agent Error: {error_msg}")
+        
+        if "rate_limit_exceeded" in error_msg.lower():
+            friendly_error = "My apologies! 😅 I'm getting so many travel requests right now that I need a quick 30-second breather. Could you try sending that last message again in a moment?"
         else:
-            state['destination'] = 'Mysore' # default fallback
+            friendly_error = f"VoyageVeda encountered an unexpected glitch: {error_msg}. Let's try that again!"
             
-    dest = state['destination']
-    days = state['days']
-    budget = state['budget']
-    interest = state.get('interest', 'leisure')
-
-    # 4. BUDGET SPLIT
-    t_split = int(budget * 0.25)
-    s_split = int(budget * 0.40)
-    f_split = int(budget * 0.35)
-    
-    improvement = ""
-
-    eco_reason = "Medium (Standard travel footprint)."
-    if interest in ['nature', 'mountain'] or budget < 10000:
-        eco_reason = "High 🌱 (Prioritizing local transport, homestays, and natural exploration deeply minimizes your footprint!)"
-        improvement += "<br><i>🌱 Eco-Tip: Carry a reusable water bottle and support local artisans to maximize your eco-score!</i>"
-    elif budget > 20000:
-        eco_reason = "Moderate (Premium travel usually involves flights)."
-        improvement += "<br><i>🌱 Eco-Tip: Select eco-certified luxury resorts to offset carbon emissions!</i>"
-
-    if budget < 5000:
-        improvement = "<i>💡 Tip: Consider taking a sleeper bus and staying in local hostels to easily meet this budget.</i>"
-    elif budget > 15000:
-        improvement = "<i>💡 Tip: Your budget supports premium transport. Look for fast flights and boutique hotels!</i>"
-
-    # 5. REVIEWS & RATINGS
-    reviews_db = {
-        'Goa': 'Highly rated for vibrant beaches, cafes, and nightlife.',
-        'Mysore': 'Famous for its deeply rich royal heritage and peaceful ambiance.',
-        'Munnar': 'Stunningly peaceful and scenic hill station with endless tea gardens.',
-        'Coorg': 'The Scotland of India; incredible coffee estates and misty weather.',
-        'Jaipur': 'Royal architecture, imposing forts, and world-class hospitality.',
-        'Delhi': 'A melting pot of centuries of history and vibrant street food.',
-        'Gokarna': 'A serene, budget-friendly alternative to Goa with untouched beaches.'
-    }
-    rev = reviews_db.get(dest, f"A fantastic choice offering unique experiences tailored to your {interest} style.")
-
-    # 6. ITINERARY GENERATION
-    itin_html = "<ul>"
-    itin_array = []
-    
-    # Day 1
-    itin_html += f"<li><b>Day 1: Arrival & Exploration</b><br> - Arrive in {dest} and Check-in to your accommodation.<br> - Afternoon: Explore the famous local centers.<br> - Evening: Enjoy regional dinner (Budget: ₹{int(f_split/days)}).</li>"
-    itin_array.append({"day": 1, "plan": "Arrival, Check-in, Local exploration, Regional dining."})
-    
-    # Day 2 to N
-    for d in range(2, days + 1):
-        if d == days:
-            itin_html += f"<li><b>Day {d}: Farewell & Departure</b><br> - Morning: Last minute shopping or relaxing breakfasts.<br> - Afternoon: Proceed to terminal/station for return trip.</li>"
-            itin_array.append({"day": d, "plan": "Farewell breakfasts, relaxed morning, return trip."})
-        else:
-            itin_html += f"<li><b>Day {d}: Sightseeing & Deep Dive</b><br> - Morning: Visit the top historical or scenic viewpoints of {dest}.<br> - Evening: Leisure walks and local street food.</li>"
-            itin_array.append({"day": d, "plan": "Main sightseeing, immersive local experiences."})
-    itin_html += "</ul>"
-
-    json_response = {
-        "destination": dest,
-        "itinerary": itin_array,
-        "budget_split": {"travel": t_split, "stay": s_split, "food": f_split},
-        "eco_score": eco_reason,
-        "review": rev,
-        "reason": f"Selected because it perfectly fits your {days}-day timeline and ₹{budget} budget constraints."
-    }
-    
-    # 7. RENDER MARKUPS
-    state['ready_to_save'] = True
-
-    display_msg = f"Great choice! Based on your budget of <b>₹{budget}</b> for <b>{days} days</b>, here’s a perfect plan for you ✨<br><br>"
-    display_msg += f"<h3>Trip to {dest}</h3>"
-    display_msg += f"<b>Destination Review:</b> {rev}<br>"
-    display_msg += f"<b>Why this location?</b> {json_response['reason']}<br><br>"
-    
-    display_msg += f"<b>Smart Budget Split (₹{budget}):</b><br>"
-    display_msg += f"➔ Travel: ₹{t_split}<br>➔ Stay: ₹{s_split}<br>➔ Food: ₹{f_split}<br>{improvement}<br><br>"
-    
-    display_msg += itin_html
-    
-    display_msg += f"<br>Does this look perfect? (Type <b>Confirm</b> to rigidly save this itinerary to your dashboard, or say things like 'Increase budget by 2000' or 'Add one more day')."
-
-    # Save markup (clean variant for dashboard)
-    save_msg = f"<h3>Trip to {dest} ({days} Days / ₹{budget})</h3>"
-    save_msg += f"<b>Review:</b> {rev}<br>"
-    save_msg += f"<b>Budget:</b> Travel: ₹{t_split} | Stay: ₹{s_split} | Food: ₹{f_split}<br>"
-    save_msg += itin_html
-
-    return jsonify({
-        "displayMarkup": display_msg,
-        "saveMarkup": save_msg,
-        "newState": state,
-        "agentData": json_response
-    })
+        return jsonify({
+            "displayMarkup": friendly_error,
+            "newState": state
+        }), 500
 
 if __name__ == '__main__':
     print("Starting India Travel Backend on http://127.0.0.1:5000")

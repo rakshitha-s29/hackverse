@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,13 @@
         body {
             background-color: #0d0d0d;
         }
+
         .dashboard-container {
             display: flex;
             height: calc(100vh - 80px);
             margin-top: 80px;
         }
+
         .sidebar {
             width: 300px;
             background: #111;
@@ -23,12 +26,14 @@
             overflow-y: auto;
             flex-shrink: 0;
         }
+
         .main-pane {
             flex-grow: 1;
             padding: 40px;
             overflow-y: auto;
             background: #0d0d0d;
         }
+
         .new-trip-btn {
             width: 100%;
             padding: 12px;
@@ -46,10 +51,12 @@
             gap: 8px;
             transition: 0.2s;
         }
+
         .new-trip-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255,51,102,0.3);
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
         }
+
         .itinerary-item {
             padding: 15px;
             background: #1a1a1a;
@@ -59,26 +66,30 @@
             border: 1px solid transparent;
             transition: 0.2s;
         }
-        .itinerary-item:hover, .itinerary-item.active {
+
+        .itinerary-item:hover,
+        .itinerary-item.active {
             background: #2a2a2a;
             border-color: var(--primary-color);
         }
+
         .itinerary-item h4 {
             margin: 0 0 5px 0;
             font-size: 16px;
         }
+
         .itinerary-item p {
             margin: 0;
             font-size: 12px;
             color: var(--text-muted);
         }
-        
+
         .empty-state {
             text-align: center;
             color: var(--text-muted);
             margin-top: 50px;
         }
-        
+
         .content-card {
             background: #111;
             padding: 30px;
@@ -87,6 +98,7 @@
             line-height: 1.8;
             font-size: 16px;
         }
+
         .toolbar {
             display: flex;
             justify-content: space-between;
@@ -95,6 +107,7 @@
             padding-bottom: 15px;
             border-bottom: 1px solid var(--glass-border);
         }
+
         .delete-btn {
             background: transparent;
             color: #ff4444;
@@ -107,24 +120,30 @@
             gap: 5px;
             transition: 0.2s;
         }
+
         .delete-btn:hover {
             background: #ff4444;
             color: white;
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar scrolled" id="navbar">
-        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png" alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;" onclick="window.location='/'"></div>
+        <div class="nav-brand" style="display:flex; align-items:center; padding-left: 10px;"><img src="/logo.png"
+                alt="Traveza Logo" style="height: 110px; width: auto; object-fit: contain; cursor:pointer;"
+                onclick="window.location='/'"></div>
         <div class="nav-links" style="display:flex; align-items:center;">
             <a href="/">Home</a>
             <a href="/#destinations">Destinations</a>
             <div class="nav-dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Transport <i class="ph ph-caret-down"></i></a>
                 <div class="nav-dropdown-content">
-                    <a href="https://www.google.com/travel/flights?gl=IN&hl=en" target="_blank"><i class="ph ph-airplane"></i> Flights</a>
-                    <a href="https://www.irctc.co.in/nget/train-search" target="_blank"><i class="ph ph-train"></i> Trains</a>
+                    <a href="https://www.google.com/travel/flights?gl=IN&hl=en" target="_blank"><i
+                            class="ph ph-airplane"></i> Flights</a>
+                    <a href="https://www.irctc.co.in/nget/train-search" target="_blank"><i class="ph ph-train"></i>
+                        Trains</a>
                     <a href="https://www.redbus.in" target="_blank"><i class="ph ph-bus"></i> Buses</a>
                 </div>
             </div>
@@ -137,19 +156,20 @@
             <button class="new-trip-btn" onclick="window.location.href='/'">
                 <i class="ph ph-plus-circle"></i> Create New Trip
             </button>
-            <h3 style="margin-bottom:15px; font-size:14px; text-transform:uppercase; color:var(--text-muted);">Saved Histories</h3>
+            <h3 style="margin-bottom:15px; font-size:14px; text-transform:uppercase; color:var(--text-muted);">Saved
+                Histories</h3>
             <div id="sidebar-list">
                 <!-- Javascript maps array here -->
             </div>
         </div>
-        
+
         <div class="main-pane" id="main-pane">
             <div class="empty-state" id="empty-state">
                 <i class="ph ph-map-trifold" style="font-size: 60px; margin-bottom: 20px; color: #333;"></i>
                 <h2>No Itinerary Selected</h2>
                 <p>Select a saved trip from the left or create a new one using Namaste Navigator.</p>
             </div>
-            
+
             <div class="content-card" id="content-card" style="display: none;">
                 <div class="toolbar">
                     <h2 id="trip-header">Trip Details</h2>
@@ -171,10 +191,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let itineraries = JSON.parse(localStorage.getItem('indiaExpItineraryList')) || [];
-            
+
             // Legacy migration handler (if an old user had a string 'indiaExpItinerary')
             let legacy = localStorage.getItem('indiaExpItinerary');
-            if(legacy) {
+            if (legacy) {
                 itineraries.push({
                     id: Date.now() - 1000,
                     destination: "Legacy Saved Trip",
@@ -196,13 +216,13 @@
 
             function renderSidebar() {
                 sidebarList.innerHTML = '';
-                if(itineraries.length === 0) {
+                if (itineraries.length === 0) {
                     sidebarList.innerHTML = '<p style="color:#666; font-size:13px;">No trips saved yet.</p>';
                     return;
                 }
-                
+
                 // Sort by ID descending (newest first)
-                itineraries.sort((a,b) => b.id - a.id).forEach(trip => {
+                itineraries.sort((a, b) => b.id - a.id).forEach(trip => {
                     const div = document.createElement('div');
                     div.className = `itinerary-item ${currentlySelectedId === trip.id ? 'active' : ''}`;
                     div.innerHTML = `
@@ -221,16 +241,16 @@
             function renderMainPane(trip) {
                 emptyState.style.display = 'none';
                 contentCard.style.display = 'block';
-                
+
                 tripHeader.textContent = `${trip.destination} Itinerary`;
                 itineraryBody.innerHTML = trip.content;
             }
 
             deleteBtn.addEventListener('click', () => {
-                if(confirm("Are you sure you want to delete this trip itinerary permanently?")) {
+                if (confirm("Are you sure you want to delete this trip itinerary permanently?")) {
                     itineraries = itineraries.filter(t => t.id !== currentlySelectedId);
                     localStorage.setItem('indiaExpItineraryList', JSON.stringify(itineraries));
-                    
+
                     currentlySelectedId = null;
                     emptyState.style.display = 'block';
                     contentCard.style.display = 'none';
@@ -239,14 +259,15 @@
             });
 
             // Auto-select latest trip if any exists
-            if(itineraries.length > 0) {
-                const latest = itineraries.sort((a,b) => b.id - a.id)[0];
+            if (itineraries.length > 0) {
+                const latest = itineraries.sort((a, b) => b.id - a.id)[0];
                 currentlySelectedId = latest.id;
                 renderMainPane(latest);
             }
-            
+
             renderSidebar();
         });
     </script>
 </body>
+
 </html>

@@ -481,10 +481,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Core session memory for the Python NLP Engine
     let agentState = {
+        messages: [],
         budget: null,
         days: null,
         interest: null,
         destination: null,
+        source_location: null,
         saveContent: null,
         ready_to_save: false
     };
@@ -494,7 +496,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const sel = document.getElementById('global-traveler-select');
             let travelerType = sel ? sel.value : "2";
             agentState.people = travelerType;
-            addMessage(`Namaste ${name}! I am your personal AI Travel Agent.<br><br>Tell me what you're dreaming of! Try: <b>"Plan a 3 day trip to Mysore under 6000"</b> or <b>"Suggest a cheap beach weekend."</b>`, 'ai');
+            addMessage(`Namaste ${name}! I am <b>VoyageVeda</b>, your personal Agentic AI Travel Expert.<br><br>I can now perform live research, check current weather, and reason through your trip goals. How can I help you today?`, 'ai');
+            agentState.messages.push(`Namaste ${name}! I am VoyageVeda, your personal Agentic AI Travel Expert. How can I help you?`);
         }
     }
 
@@ -529,6 +532,15 @@ document.addEventListener('DOMContentLoaded', () => {
         msgDiv.innerHTML = text;
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Make suggestion pills clickable if any
+        msgDiv.querySelectorAll('.suggestion-pills span').forEach(pill => {
+            pill.style.cursor = 'pointer';
+            pill.addEventListener('click', () => {
+                userInput.value = pill.innerText.replace(/,$/, ''); // Remove trailing comma if exists
+                handleUserInput();
+            });
+        });
     }
 
     async function handleUserInput() {
@@ -536,6 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!text) return;
         
         addMessage(text, 'user');
+        agentState.messages.push(text);
         userInput.value = '';
 
         if(agentState.ready_to_save && (text.toLowerCase().includes('confirm') || text.toLowerCase().includes('yes') || text.toLowerCase().includes('save'))) {
@@ -585,13 +598,49 @@ document.addEventListener('DOMContentLoaded', () => {
          })
          .then(r => r.json())
          .then(data => {
-             document.getElementById(typingId).remove();
+             const typingElement = document.getElementById(typingId);
+             if (typingElement) typingElement.remove();
              
              // Update our continuous memory
              if(data.newState) {
                  agentState = data.newState;
              }
              
+             // If the agent provided reasoning, show it
+             if (data.agentData && data.agentData.reasoning) {
+                 const thoughtDiv = document.createElement('div');
+                 thoughtDiv.className = 'msg ai thought-process';
+                 thoughtDiv.style.fontSize = '12px';
+                 thoughtDiv.style.opacity = '0.8';
+                 thoughtDiv.style.marginBottom = '5px';
+                 thoughtDiv.style.padding = '8px';
+                 thoughtDiv.style.borderLeft = '3px solid var(--primary-color)';
+                 thoughtDiv.style.background = 'rgba(255, 215, 0, 0.05)';
+                 thoughtDiv.innerHTML = `<b>Agent Reasoning:</b> ${data.agentData.reasoning}`;
+                 chatMessages.appendChild(thoughtDiv);
+             }
+
+             // Show Task Execution Plan
+             if (data.agentData && data.agentData.task_plan && data.agentData.task_plan.length > 0) {
+                 const planDiv = document.createElement('div');
+                 planDiv.className = 'msg ai task-console';
+                 planDiv.style.fontSize = '11px';
+                 planDiv.style.fontFamily = 'monospace';
+                 planDiv.style.color = '#FFD700';
+                 planDiv.style.background = '#1a1a1a';
+                 planDiv.style.padding = '10px';
+                 planDiv.style.borderRadius = '8px';
+                 planDiv.style.border = '1px solid #333';
+                 
+                 let planHTML = "<b>AUTO-AGENT EXECUTION PLAN:</b><ul style='margin:5px 0; padding-left:15px;'>";
+                 data.agentData.task_plan.forEach(task => {
+                     planHTML += `<li>[RUNNING] ${task}</li>`;
+                 });
+                 planHTML += "</ul><span style='color:#0f0'>[SUCCESS] Task sequence complete.</span>";
+                 planDiv.innerHTML = planHTML;
+                 chatMessages.appendChild(planDiv);
+             }
+
              finalItineraryMarkup = data.displayMarkup;
              if(data.saveMarkup) agentState.saveContent = data.saveMarkup;
              

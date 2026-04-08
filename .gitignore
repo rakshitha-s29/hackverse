@@ -1,0 +1,13 @@
+.env
+*.db
+venv/
+__pycache__/
+*.pyc
+.vscode/
+node_modules/
+.gemini/
+*.log
+tmp/
+voyage_veda.db
+sqlite_db.db
+database/*.db
